@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
+  // Dark mode effect
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -24,9 +25,10 @@ function App() {
   }, [darkMode]);
 
   return (
-    <Router basename="/my-portofolio">
+    <Router>
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
+        {/* Home Page */}
         <Route
           path="/"
           element={
@@ -39,6 +41,8 @@ function App() {
             </>
           }
         />
+
+        {/* Other Pages */}
         <Route path="/about" element={<AboutMe />} />
         <Route path="/projects" element={<MyProjects />} />
         <Route path="/contact" element={<ContactMe />} />

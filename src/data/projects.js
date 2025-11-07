@@ -1,4 +1,5 @@
-// gambar taruh di /public/images
+import lightImage from "../assets/images/light.jpg";
+
 const projects = [
   {
     id: 1,
@@ -7,7 +8,7 @@ const projects = [
     description:
       "NusantaraKu is an online platform that aims to introduce and promote various cultures from Indonesia. Built with responsive design and CMS integration.",
     tags: ["React", "Tailwind", "Netlify"],
-    image: "/images/light.jpg",
+    image: lightImage,
     caseStudyUrl: "#",
     liveUrl: "https://example.com",
   },
@@ -18,7 +19,7 @@ const projects = [
     description:
       "BudgetBuddy helps users track their income and expenses with easy-to-use charts and reminders. Built with React Native and Firebase.",
     tags: ["React Native", "Firebase", "Expo"],
-    image: "/images/light.jpg",
+    image: lightImage,
     caseStudyUrl: "#",
     liveUrl: "#",
   },
@@ -29,7 +30,7 @@ const projects = [
     description:
       "PhotoSnap is a modern portfolio website for photographers. Features include galleries, client login, and booking management.",
     tags: ["NextJS", "Tailwind", "Vercel"],
-    image: "/images/light.jpg",
+    image: lightImage,
     caseStudyUrl: "#",
     liveUrl: "https://example.com",
   },
@@ -40,7 +41,7 @@ const projects = [
     description:
       "Foodie allows users to share and discover recipes with social features like comments, likes, and favorites.",
     tags: ["React", "NodeJS", "MongoDB"],
-    image: "/images/light.jpg",
+    image: lightImage,
     caseStudyUrl: "#",
     liveUrl: "#",
   },
