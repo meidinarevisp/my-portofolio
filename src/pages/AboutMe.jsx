@@ -1,5 +1,6 @@
 // AboutMe.jsx
 import React, { useState } from "react";
+import umby from "../../public/images/umby.png";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaMicrosoft } from "react-icons/fa";
@@ -370,7 +371,7 @@ export default function AboutMe() {
               >
                 {/* Logo universitas */}
                 <img
-                  src="/images/umby.png" // ganti path sesuai logo kamu
+                  src={umby} // path sudah berupa variable import
                   alt={edu.school}
                   className="w-20 h-20 object-contain"
                 />
