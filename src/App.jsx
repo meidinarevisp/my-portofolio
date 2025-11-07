@@ -24,7 +24,7 @@ function App() {
   }, [darkMode]);
 
   return (
-    <Router>
+    <Router basename="/my-portofolio">
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
         <Route
