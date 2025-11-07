@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -25,7 +25,8 @@ function App() {
   }, [darkMode]);
 
   return (
-    <Router>
+    // Tambahkan basename sesuai nama repo GitHub Pages
+    <Router basename="/my-portofolio">
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
         {/* Home Page */}
