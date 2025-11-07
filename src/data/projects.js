@@ -1,4 +1,4 @@
-import lightImage from "../assets/images/light.jpg";
+import lightImage from "../../public/images/light.jpg";
 
 const projects = [
   {
