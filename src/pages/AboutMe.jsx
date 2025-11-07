@@ -1,8 +1,9 @@
 // AboutMe.jsx
 import React, { useState } from "react";
-import umby from "../../public/images/umby.png";
-import responsive from "../../public/images/responsive.png";
-import api from "../../public/images/api.png";
+import umby from "../assets/images/umby.png";
+import responsive from "../assets/images/responsive.png";
+import api from "../assets/images/api.png";
+import profile from "../assets/images/profile.png";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaMicrosoft } from "react-icons/fa";
@@ -169,7 +170,7 @@ export default function AboutMe() {
               {/* Wrapper foto dengan border adaptif */}
               <div className="relative w-56 h-80 md:w-64 md:h-88 overflow-hidden rounded-b-[160px] border-b-[4px] border-pink-500 dark:border-pink-300">
                 <Motion.img
-                  src="images/profile.png"
+                  src={profile}
                   alt="Meidina Revi Sandra Pertiwi"
                   className="
         w-full h-full object-contain scale-[1.22] translate-y-8
