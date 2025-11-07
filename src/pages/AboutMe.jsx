@@ -1,6 +1,8 @@
 // AboutMe.jsx
 import React, { useState } from "react";
 import umby from "../../public/images/umby.png";
+import responsive from "../../public/images/responsive.png";
+import api from "../../public/images/api.png";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaMicrosoft } from "react-icons/fa";
@@ -75,17 +77,11 @@ export default function AboutMe() {
     },
     {
       name: "Responsive Web Design",
-      icon: (
-        <img
-          src="/images/responsive.png"
-          alt="responsive"
-          className="w-7 h-7"
-        />
-      ),
+      icon: <img src={responsive} alt="responsive" className="w-7 h-7" />,
     },
     {
       name: "API Integration",
-      icon: <img src="/images/api.png" alt="api" className="w-7 h-7" />,
+      icon: <img src={api} alt="api" className="w-7 h-7" />,
     },
   ];
 
