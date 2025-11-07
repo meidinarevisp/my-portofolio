@@ -42,7 +42,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-24 transition-colors duration-700 bg-[#fef6f8] dark:bg-[#0a0a0a] overflow-hidden"
+      className="relative py-24 transition-colors duration-200 bg-[#fef6f8] dark:bg-[#0a0a0a] overflow-hidden"
     >
       {/* === BACKGROUND EFFECTS === */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />

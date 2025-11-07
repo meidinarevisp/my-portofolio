@@ -34,7 +34,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative py-24 overflow-hidden transition-colors duration-700 bg-[#fef6f8] dark:bg-[#0a0a0a]"
+      className="relative py-24 overflow-hidden transition-colors duration-200 bg-[#fef6f8] dark:bg-[#0a0a0a]"
     >
       {/* TEXTURE */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />

@@ -23,13 +23,12 @@ import {
 } from "react-icons/si";
 import { MdOutlineWork, MdPerson } from "react-icons/md";
 
-// ✅ pindahkan gambar ke src/assets/images/
 import responsive from "../assets/images/responsive.png";
 import api from "../assets/images/api.png";
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState("technical");
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.2 });
 
   const technicalSkills = [
     { name: "HTML", icon: <SiHtml5 className="text-orange-600 w-7 h-7" /> },
@@ -96,94 +95,106 @@ export default function Skills() {
     "Attention to Detail",
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+  // Header & toggle animation (masuk dari atas, keluar ke atas)
+  const headerVariants = {
+    hidden: { opacity: 0, y: -50 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.4, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
+    exit: { opacity: 0, y: -50, transition: { duration: 0.4, ease: "easeIn" } },
+  };
+
+  // Skills flip per baris (masuk dari -90° → 0°, keluar 0° → 90°)
+  const rowVariants = {
+    hidden: { opacity: 0, rotateX: -90 },
+    visible: (i) => ({
+      opacity: 1,
+      rotateX: 0,
+      transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" },
+    }),
+    exit: (i) => ({
+      opacity: 0,
+      rotateX: 90,
+      transition: { delay: i * 0.04, duration: 0.3, ease: "easeIn" },
+    }),
   };
 
   return (
     <section
       id="skills"
-      className="relative py-24 bg-[#fef6f8] dark:bg-[#0a0a0a] overflow-hidden"
+      ref={ref}
+      className="relative py-24 bg-[#fef6f8] dark:bg-[#0a0a0a] overflow-hidden transition-colors duration-200"
     >
-      <div className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />
-      <div className="absolute top-0 right-20 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 left-10 w-52 h-52 bg-rose-500/15 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[url('https://www.transparenttextures.com/patterns/noise.png')] transition-colors duration-200" />
+      <div className="absolute top-18 right-20 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl transition-colors duration-200" />
+      <div className="absolute bottom-13 left-10 w-52 h-52 bg-rose-500/15 rounded-full blur-3xl transition-colors duration-200" />
 
-      <div
-        ref={ref}
-        className="relative z-10 container mx-auto max-w-7xl px-6 sm:px-10 lg:px-16"
-      >
-        <Motion.div
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={containerVariants}
-          className="text-center mb-10"
-        >
-          <h4 className="text-sm text-pink-600 dark:text-pink-400 tracking-widest uppercase font-semibold mb-2">
-            Skills
-          </h4>
-          <h2 className="text-4xl font-extrabold text-pink-900 dark:text-rose-200 mb-8">
-            My Technical & Soft Skills
-          </h2>
-
-          {/* Toggle */}
-          <div className="inline-flex bg-white dark:bg-[#1a1a1a] rounded-full p-1 shadow-sm border border-pink-100 dark:border-[#2a2a2a]">
-            <button
-              onClick={() => setActiveTab("technical")}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 ${
-                activeTab === "technical"
-                  ? "bg-pink-600 text-white shadow-md"
-                  : "text-pink-800 dark:text-pink-200"
-              }`}
+      <div className="relative z-10 container mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+        {/* Header & Toggle */}
+        <AnimatePresence>
+          {inView && (
+            <Motion.div
+              key="header"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={headerVariants}
+              className="text-center mb-10 transition-colors duration-200"
             >
-              <MdOutlineWork className="text-lg" /> Technical
-            </button>
-            <button
-              onClick={() => setActiveTab("soft")}
-              className={`flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 ${
-                activeTab === "soft"
-                  ? "bg-pink-600 text-white shadow-md"
-                  : "text-pink-800 dark:text-pink-200"
-              }`}
-            >
-              <MdPerson className="text-lg" /> Soft Skills
-            </button>
-          </div>
-        </Motion.div>
+              <h4 className="text-sm text-pink-600 dark:text-pink-400 tracking-widest uppercase font-semibold mb-2 transition-colors duration-200">
+                Skills
+              </h4>
+              <h2 className="text-4xl font-extrabold text-pink-900 dark:text-rose-200 mb-8 transition-colors duration-200">
+                My Technical & Soft Skills
+              </h2>
 
+              <div className="inline-flex bg-white dark:bg-[#1a1a1a] rounded-full p-1 shadow-sm border border-pink-100 dark:border-[#2a2a2a] transition-colors duration-200">
+                <button
+                  onClick={() => setActiveTab("technical")}
+                  className={`flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-200 ${
+                    activeTab === "technical"
+                      ? "bg-pink-600 text-white shadow-md"
+                      : "text-pink-800 dark:text-pink-200"
+                  }`}
+                >
+                  <MdOutlineWork className="text-lg" /> Technical
+                </button>
+                <button
+                  onClick={() => setActiveTab("soft")}
+                  className={`flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-200 ${
+                    activeTab === "soft"
+                      ? "bg-pink-600 text-white shadow-md"
+                      : "text-pink-800 dark:text-pink-200"
+                  }`}
+                >
+                  <MdPerson className="text-lg" /> Soft Skills
+                </button>
+              </div>
+            </Motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Skills Cards */}
         <AnimatePresence mode="wait">
           {activeTab === "technical" ? (
             <Motion.div
               key="technical"
               className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
             >
               {technicalSkills.map((s, i) => (
                 <Motion.div
                   key={i}
-                  variants={cardVariants}
-                  whileHover={{
-                    scale: 1.05,
-                    y: -2,
-                    transition: { duration: 0.2 },
-                  }}
-                  className="flex items-center gap-3 p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm transition-all duration-300"
+                  custom={i}
+                  initial="hidden"
+                  animate={inView ? "visible" : "hidden"}
+                  exit="exit"
+                  variants={rowVariants}
+                  className="flex items-center gap-3 p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm transition-colors duration-200"
                 >
                   <div>{s.icon}</div>
-                  <p className="font-medium text-pink-950 dark:text-pink-50">
+                  <p className="font-medium text-pink-950 dark:text-pink-50 transition-colors duration-200">
                     {s.name}
                   </p>
                 </Motion.div>
@@ -193,21 +204,16 @@ export default function Skills() {
             <Motion.div
               key="soft"
               className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
             >
               {softSkills.map((skill, i) => (
                 <Motion.div
                   key={i}
-                  variants={cardVariants}
-                  whileHover={{
-                    scale: 1.05,
-                    y: -2,
-                    transition: { duration: 0.2 },
-                  }}
-                  className="p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm text-center font-medium text-pink-950 dark:text-pink-50"
+                  custom={i}
+                  initial="hidden"
+                  animate={inView ? "visible" : "hidden"}
+                  exit="exit"
+                  variants={rowVariants}
+                  className="p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm text-center font-medium text-pink-950 dark:text-pink-50 transition-colors duration-200"
                 >
                   {skill}
                 </Motion.div>

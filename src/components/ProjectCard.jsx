@@ -11,33 +11,20 @@ export default function ProjectCard({ project }) {
       scale: 1,
       transition: { duration: 0.6, ease: "easeOut" },
     },
-    exit: {
-      opacity: 0,
-      y: 40,
-      scale: 0.95,
-      transition: { duration: 0.4, ease: "easeIn" },
-    },
   };
 
   return (
     <Motion.div
       variants={cardVariants}
-      whileHover={{
-        y: -8,
-        rotateX: 3,
-        rotateY: -3,
-        boxShadow: "0 16px 32px rgba(0,0,0,0.15)",
-        transition: { type: "spring", stiffness: 250, damping: 18 },
-      }}
-      className="bg-pink-50 dark:bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-[#2a2a2a] transition-all h-full flex flex-col"
+      className="bg-pink-50 dark:bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-[#2a2a2a] transition-colors duration-200 h-full flex flex-col"
     >
       {/* Thumbnail */}
       <div className="overflow-hidden">
         <Motion.img
           src={project.image}
           alt={project.title}
-          className="w-full h-50 object-cover transition-transform duration-700"
-          whileHover={{ scale: 1.12, rotate: 1 }}
+          className="w-full h-50 object-cover transition-transform duration-300"
+          whileHover={{ scale: 1.08 }} // zoom gambar saat hover
         />
       </div>
 
@@ -48,7 +35,7 @@ export default function ProjectCard({ project }) {
           {project.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="text-xs font-medium text-pink-800 bg-pink-100 dark:bg-[#292929] dark:text-pink-200 px-3 py-[4px] rounded-full"
+              className="text-xs font-medium text-pink-800 bg-pink-100 dark:bg-[#292929] dark:text-pink-200 px-3 py-[4px] rounded-full transition-colors duration-200"
             >
               {tag}
             </span>
@@ -56,23 +43,22 @@ export default function ProjectCard({ project }) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-pink-950 dark:text-pink-50 mb-2">
+        <h3 className="text-lg font-semibold text-pink-950 dark:text-pink-50 mb-2 transition-colors duration-200">
           {project.title}
         </h3>
 
         {/* Description */}
-        <p className="text-pink-800 dark:text-pink-200 text-sm leading-relaxed mb-4 line-clamp-3">
+        <p className="text-pink-800 dark:text-pink-200 text-sm leading-relaxed mb-4 line-clamp-3 transition-colors duration-200">
           {project.description}
         </p>
 
         {/* Button */}
         <div className="mt-auto flex justify-end">
-          <Motion.a
+          <a
             href={project.link}
             target="_blank"
             rel="noreferrer"
-            whileHover={{ x: 4 }}
-            className="inline-flex items-center gap-2 text-sm font-medium text-pink-900 dark:text-pink-200 group"
+            className="inline-flex items-center gap-2 text-sm font-medium text-pink-900 dark:text-pink-200 group transition-colors duration-200"
           >
             <span className="relative inline-flex items-center gap-2">
               <span>See Details</span>
@@ -81,7 +67,7 @@ export default function ProjectCard({ project }) {
               </span>
               <span className="absolute left-0 -bottom-0.5 w-full h-[1px] bg-pink-900 dark:bg-pink-200 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </span>
-          </Motion.a>
+          </a>
         </div>
       </div>
     </Motion.div>

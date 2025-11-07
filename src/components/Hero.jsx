@@ -1,33 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion as Motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 
 export default function Hero() {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.2 });
-  const fullName = "Meidina Revi";
-  const [displayName, setDisplayName] = useState("");
-
-  useEffect(() => {
-    if (!inView) return;
-
-    let index = 0;
-    let forward = true;
-    const interval = setInterval(() => {
-      if (forward) {
-        setDisplayName(fullName.slice(0, index + 1));
-        index++;
-        if (index === fullName.length) forward = false;
-      } else {
-        setDisplayName(fullName.slice(0, index - 1));
-        index--;
-        if (index === 0) forward = true;
-      }
-    }, 150);
-
-    return () => clearInterval(interval);
-  }, [inView]);
+  const { ref } = useInView({ triggerOnce: true, threshold: 0.2 });
 
   const container = {
     hidden: {},
@@ -36,19 +14,23 @@ export default function Hero() {
     },
   };
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30, scale: 0.98 },
+  const fadeDown = {
+    hidden: { opacity: 0, y: -40, scale: 0.98 },
     show: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: { duration: 0.8, ease: "easeOut" },
     },
-    exit: {
-      opacity: 0,
-      y: -30,
-      scale: 0.98,
-      transition: { duration: 0.5, ease: "easeIn" },
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40, scale: 0.98 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.8, ease: "easeOut" },
     },
   };
 
@@ -74,24 +56,24 @@ export default function Hero() {
         className="relative max-w-3xl mx-auto px-6 z-10"
         variants={container}
         initial="hidden"
-        animate={inView ? "show" : "hidden"}
+        animate="show"
       >
         <Motion.p
-          variants={fadeUp}
+          variants={fadeDown}
           className="text-pink-600 dark:text-pink-300 text-lg mb-3 tracking-wide"
         >
           Hello, There!
         </Motion.p>
 
         <Motion.h1
-          variants={fadeUp}
+          variants={fadeDown}
           className="text-5xl md:text-6xl font-bold leading-tight tracking-tight"
         >
           <span className="font-normal text-pink-700 dark:text-pink-400">
             I'm{" "}
           </span>
           <span className="font-extrabold text-pink-900 dark:text-rose-200">
-            {displayName}
+            Meidina Revi
           </span>
           <span className="text-pink-500 dark:text-rose-400">.</span>
         </Motion.h1>
