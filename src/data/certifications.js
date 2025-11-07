@@ -2,8 +2,8 @@
 // Gunakan import gambar agar Vite resolve path dengan benar
 
 import p2bumby from "../../public/images/p2bumby.png";
-import dicoding from "../public/images/dicoding.png";
-import dicodingAcademy from "../public/images/dicodingacademy.png";
+import dicoding from "../../public/images/dicoding.png";
+import dicodingAcademy from "../../public/images/dicodingacademy.png";
 
 const certifications = [
   {
