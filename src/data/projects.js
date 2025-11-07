@@ -1,0 +1,49 @@
+// gambar taruh di /public/images
+const projects = [
+  {
+    id: 1,
+    title: "NusantaraKu - Cultural Introduction Web",
+    category: "Web Development",
+    description:
+      "NusantaraKu is an online platform that aims to introduce and promote various cultures from Indonesia. Built with responsive design and CMS integration.",
+    tags: ["React", "Tailwind", "Netlify"],
+    image: "/images/light.jpg",
+    caseStudyUrl: "#",
+    liveUrl: "https://example.com",
+  },
+  {
+    id: 2,
+    title: "BudgetBuddy - Personal Finance App",
+    category: "Mobile App",
+    description:
+      "BudgetBuddy helps users track their income and expenses with easy-to-use charts and reminders. Built with React Native and Firebase.",
+    tags: ["React Native", "Firebase", "Expo"],
+    image: "/images/light.jpg",
+    caseStudyUrl: "#",
+    liveUrl: "#",
+  },
+  {
+    id: 3,
+    title: "PhotoSnap - Photography Portfolio",
+    category: "Web Design",
+    description:
+      "PhotoSnap is a modern portfolio website for photographers. Features include galleries, client login, and booking management.",
+    tags: ["NextJS", "Tailwind", "Vercel"],
+    image: "/images/light.jpg",
+    caseStudyUrl: "#",
+    liveUrl: "https://example.com",
+  },
+  {
+    id: 4,
+    title: "Foodie - Recipe Sharing Platform",
+    category: "Web Development",
+    description:
+      "Foodie allows users to share and discover recipes with social features like comments, likes, and favorites.",
+    tags: ["React", "NodeJS", "MongoDB"],
+    image: "/images/light.jpg",
+    caseStudyUrl: "#",
+    liveUrl: "#",
+  },
+];
+
+export default projects;
