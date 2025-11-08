@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { BsSun, BsMoon } from "react-icons/bs";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -13,10 +13,12 @@ export default function Header({ darkMode, setDarkMode }) {
   const [activeMenu, setActiveMenu] = useState("Home");
 
   const navigate = useNavigate();
-  const location = useLocation(); // <- gunakan untuk dapatkan path saat ini
+  const location = useLocation();
+  const menuRef = useRef(null); // <- referensi area menu dropdown
 
   const menuItems = useMemo(() => ["Home", "About", "Projects", "Contact"], []);
 
+  // ===== Update Active Menu Berdasarkan Route =====
   useEffect(() => {
     switch (location.pathname) {
       case "/":
@@ -33,7 +35,6 @@ export default function Header({ darkMode, setDarkMode }) {
         break;
       default:
         setActiveMenu("Home");
-        break;
     }
   }, [location.pathname]);
 
@@ -44,17 +45,33 @@ export default function Header({ darkMode, setDarkMode }) {
       setScrolled(currentScrollY > 50);
       setShowHeader(!(currentScrollY > lastScrollY && currentScrollY > 80));
       setLastScrollY(currentScrollY);
-      if (menuOpen) setMenuOpen(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, menuOpen]);
+  }, [lastScrollY]);
 
   // ===== Update Clock =====
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // ===== Klik di luar area menu → tutup burger =====
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
 
   const formatTime = (date) => {
     const hours = date.getHours().toString().padStart(2, "0");
@@ -67,34 +84,17 @@ export default function Header({ darkMode, setDarkMode }) {
     setMenuOpen(false);
   };
 
-  // ===== Handle Menu Click =====
   const handleMenuClick = (item) => {
     setActiveMenu(item);
     setMenuOpen(false);
 
-    let path = "/"; // default fallback
-
-    switch (item) {
-      case "Home":
-        path = "/";
-        break;
-      case "About":
-        path = "/about";
-        break;
-      case "Projects":
-        path = "/projects";
-        break;
-      case "Contact":
-        path = "/contact";
-        break;
-      default:
-        path = "/";
-        break;
-    }
-
-    navigate(path);
-
-    // Scroll langsung ke atas halaman
+    const paths = {
+      Home: "/",
+      About: "/about",
+      Projects: "/projects",
+      Contact: "/contact",
+    };
+    navigate(paths[item] || "/");
     window.scrollTo(0, 0);
   };
 
@@ -125,12 +125,15 @@ export default function Header({ darkMode, setDarkMode }) {
           onClick={() => handleMenuClick("Home")}
         >
           <span
-            className={`text-xl font-bold tracking-wide ${
-              darkMode ? "text-rose-200" : "text-rose-700"
-            }`}
+            className="text-xl font-bold tracking-wide"
             style={{ fontFamily: "'Montserrat', sans-serif" }}
           >
-            MR.
+            <span className={`${darkMode ? "text-rose-200" : "text-pink-900"}`}>
+              MR
+            </span>
+            <span className={`${darkMode ? "text-rose-400" : "text-pink-500"}`}>
+              .
+            </span>
           </span>
         </Motion.div>
 
@@ -140,23 +143,29 @@ export default function Header({ darkMode, setDarkMode }) {
             <Motion.a
               key={item}
               onClick={() => handleMenuClick(item)}
-              whileHover={{ y: -2, scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              className={`text-sm relative cursor-pointer ${
-                darkMode
-                  ? "text-pink-200 hover:text-rose-400"
-                  : "text-rose-700 hover:text-rose-500"
-              }`}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className={`text-sm relative cursor-pointer transition-colors duration-300 ease-in-out
+        ${
+          darkMode
+            ? "text-pink-200 hover:text-rose-400"
+            : "text-rose-700 hover:text-rose-500"
+        }`}
               style={{ fontFamily: "'Montserrat', sans-serif" }}
             >
               {item}
               {activeMenu === item && (
                 <Motion.span
-                  layoutId="underline"
-                  className={`absolute -bottom-1 left-0 w-full h-[2px] rounded ${
+                  key={item}
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  exit={{ width: 0 }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeInOut",
+                  }}
+                  className={`absolute -bottom-1 left-0 h-[2px] rounded ${
                     darkMode ? "bg-pink-400" : "bg-rose-700"
                   }`}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
             </Motion.a>
@@ -168,9 +177,14 @@ export default function Header({ darkMode, setDarkMode }) {
           <Motion.span
             animate={{ opacity: [1, 0.85, 1] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className={`hidden md:inline-block text-sm font-semibold uppercase tracking-[0.25em] ${
-              darkMode ? "text-rose-300" : "text-rose-700"
-            }`}
+            className={`hidden md:inline-block text-[13px] font-medium tracking-[0.15em] mr-3
+    ${darkMode ? "text-rose-200/70" : "text-rose-800/70"}`}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 400,
+              letterSpacing: "0.15em",
+              opacity: 0.8,
+            }}
           >
             {formatTime(time)}
           </Motion.span>
@@ -180,7 +194,7 @@ export default function Header({ darkMode, setDarkMode }) {
             onClick={toggleDarkMode}
             whileTap={{ scale: 0.9 }}
             className={`relative w-16 h-8 rounded-full flex items-center transition-all duration-500 ${
-              darkMode ? "bg-[#5A1E2D]" : "bg-rose-200"
+              darkMode ? "bg-rose-900" : "bg-rose-200"
             }`}
           >
             <Motion.div
@@ -198,7 +212,7 @@ export default function Header({ darkMode, setDarkMode }) {
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: 90 }}
                   >
-                    <BsMoon className="text-[#ac496e]" size={16} />
+                    <BsMoon className="text-pink-400" size={16} />
                   </Motion.div>
                 ) : (
                   <Motion.div
@@ -236,6 +250,7 @@ export default function Header({ darkMode, setDarkMode }) {
       <AnimatePresence>
         {menuOpen && (
           <Motion.div
+            ref={menuRef} // <- ini penting untuk deteksi klik di luar
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 8 }}
             exit={{ opacity: 0, y: -15 }}
