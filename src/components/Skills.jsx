@@ -95,7 +95,6 @@ export default function Skills() {
     "Attention to Detail",
   ];
 
-  // Header & toggle animation (masuk dari atas, keluar ke atas)
   const headerVariants = {
     hidden: { opacity: 0, y: -50 },
     visible: {
@@ -106,7 +105,6 @@ export default function Skills() {
     exit: { opacity: 0, y: -50, transition: { duration: 0.4, ease: "easeIn" } },
   };
 
-  // Skills flip per baris (masuk dari -90° → 0°, keluar 0° → 90°)
   const rowVariants = {
     hidden: { opacity: 0, rotateX: -90 },
     visible: (i) => ({
@@ -131,7 +129,8 @@ export default function Skills() {
       <div className="absolute top-18 right-20 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl transition-colors duration-200" />
       <div className="absolute bottom-13 left-10 w-52 h-52 bg-rose-500/15 rounded-full blur-3xl transition-colors duration-200" />
 
-      <div className="relative z-10 container mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
+      {/* Updated width container */}
+      <div className="relative z-10 container mx-auto max-w-[78rem] px-6 sm:px-10 lg:px-16">
         {/* Header & Toggle */}
         <AnimatePresence>
           {inView && (
@@ -181,7 +180,7 @@ export default function Skills() {
           {activeTab === "technical" ? (
             <Motion.div
               key="technical"
-              className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+              className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
             >
               {technicalSkills.map((s, i) => (
                 <Motion.div
@@ -191,7 +190,7 @@ export default function Skills() {
                   animate={inView ? "visible" : "hidden"}
                   exit="exit"
                   variants={rowVariants}
-                  className="flex items-center gap-3 p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm transition-colors duration-200"
+                  className="flex items-center gap-3 p-4 px-5 w-full bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm transition-colors duration-200 min-h-[60px]"
                 >
                   <div>{s.icon}</div>
                   <p className="font-medium text-pink-950 dark:text-pink-50 transition-colors duration-200">
@@ -213,7 +212,7 @@ export default function Skills() {
                   animate={inView ? "visible" : "hidden"}
                   exit="exit"
                   variants={rowVariants}
-                  className="p-5 bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm text-center font-medium text-pink-950 dark:text-pink-50 transition-colors duration-200"
+                  className="p-4 px-5 w-full bg-white dark:bg-[#1a1a1a] rounded-xl border border-pink-100 dark:border-[#2a2a2a] shadow-sm text-center font-medium text-pink-950 dark:text-pink-50 transition-colors duration-200 min-h-[60px]"
                 >
                   {skill}
                 </Motion.div>

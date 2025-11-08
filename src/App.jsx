@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -27,6 +28,7 @@ function App() {
   return (
     <Router>
       <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <ScrollToTop />
       <Routes>
         {/* Home Page */}
         <Route

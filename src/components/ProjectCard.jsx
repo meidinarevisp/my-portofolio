@@ -16,20 +16,20 @@ export default function ProjectCard({ project }) {
   return (
     <Motion.div
       variants={cardVariants}
-      className="bg-pink-50 dark:bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-[#2a2a2a] transition-colors duration-200 h-full flex flex-col"
+      className="bg-pink-50 dark:bg-[#1a1a1a] rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-[#2a2a2a] transition-colors duration-200 flex flex-col"
     >
       {/* Thumbnail */}
-      <div className="overflow-hidden">
+      <div className="overflow-hidden flex-shrink-0">
         <Motion.img
           src={project.image}
           alt={project.title}
           className="w-full h-50 object-cover transition-transform duration-300"
-          whileHover={{ scale: 1.08 }} // zoom gambar saat hover
+          whileHover={{ scale: 1.08 }}
         />
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col flex-grow">
+      <div className="p-6 flex flex-col flex-1">
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tags.map((tag, idx) => (
@@ -43,17 +43,12 @@ export default function ProjectCard({ project }) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold text-pink-950 dark:text-pink-50 mb-2 transition-colors duration-200">
+        <h3 className="text-lg font-semibold text-pink-950 dark:text-pink-50 mb-4 flex-1 transition-colors duration-200">
           {project.title}
         </h3>
 
-        {/* Description */}
-        <p className="text-pink-800 dark:text-pink-200 text-sm leading-relaxed mb-4 line-clamp-3 transition-colors duration-200">
-          {project.description}
-        </p>
-
         {/* Button */}
-        <div className="mt-auto flex justify-end">
+        <div className="flex justify-end mt-auto">
           <a
             href={project.link}
             target="_blank"

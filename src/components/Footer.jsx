@@ -21,7 +21,7 @@ export default function Footer() {
   return (
     <footer
       className="
-        relative py-5
+        relative py-6
         bg-[#ffe4e8] dark:bg-[#121010]
         transition-colors duration-700
         font-[Quicksand]
@@ -34,21 +34,21 @@ export default function Footer() {
         viewport={{ once: true }}
         className="
           container mx-auto px-8 
-          relative flex flex-col md:flex-row items-center justify-between 
-          gap-4 text-center md:text-left
+          flex flex-col md:flex-row items-center justify-between
+          gap-6 text-center md:text-left relative
+          md:max-w-6xl
         "
       >
         {/* ===== Left: Copyright ===== */}
-        <p className="text-sm text-rose-700 dark:text-rose-300 font-sans tracking-wide md:order-1 order-2">
+        <p className="text-sm text-rose-700 dark:text-rose-300 font-sans tracking-wide order-3 md:order-1 w-full md:w-1/3">
           © {new Date().getFullYear()} All rights reserved
         </p>
 
-        {/* ===== Center: Social Icons ===== */}
+        {/* ===== Center: Social Icons (tengah simetris) ===== */}
         <div
           className="
-            absolute left-1/2 -translate-x-1/2
             flex items-center justify-center gap-4
-            order-1 md:order-2
+            order-1 md:order-2 w-full md:w-1/3
           "
         >
           {socials.map((item, index) => (
@@ -74,17 +74,32 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* ===== Right: Built With Text ===== */}
-        <p className="text-xs text-rose-700 dark:text-rose-300 leading-snug font-[Poppins] font-normal tracking-wide md:order-3 order-3">
-          <span className="text-rose-900 dark:text-rose-50 tracking-wide">
-            Developed by Meidina Revi — Built with{" "}
+        {/* ===== Right: Built With Text (2 baris, seimbang) ===== */}
+        <div
+          className="
+            text-xs text-rose-700 dark:text-rose-300 leading-relaxed 
+            font-[Poppins] font-normal tracking-wide 
+            order-2 md:order-3 w-full md:w-1/3 
+            text-center md:text-right
+          "
+        >
+          <p>
+            <span className="text-rose-900 dark:text-rose-50">
+              Developed by{" "}
+              <span className="font-semibold text-rose-900 dark:text-rose-100">
+                Meidina Revi
+              </span>
+            </span>
+          </p>
+          <p>
+            Built with{" "}
             <span className="text-rose-600 dark:text-rose-200">React</span>,{" "}
             <span className="text-rose-600 dark:text-rose-200">Vite</span>, and{" "}
             <span className="text-rose-600 dark:text-rose-200">
               Tailwind CSS
             </span>
-          </span>
-        </p>
+          </p>
+        </div>
       </Motion.div>
 
       {/* ===== Subtle Texture Noise ===== */}

@@ -28,14 +28,27 @@ export default function About() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- MASUK ---
+  // --- MASUK BERURUTAN ---
   useEffect(() => {
     if (inView && scrollDirection.current === "down") {
+      // Animasi berurutan dengan delay
       aboutTextControls.start("visible");
-      para1Controls.start("visible");
-      titleControls.start("visible");
-      para2Controls.start("visible");
-      btnControls.start("visible");
+
+      setTimeout(() => {
+        titleControls.start("visible");
+      }, 150);
+
+      setTimeout(() => {
+        para1Controls.start("visible");
+      }, 300);
+
+      setTimeout(() => {
+        para2Controls.start("visible");
+      }, 450);
+
+      setTimeout(() => {
+        btnControls.start("visible");
+      }, 600);
     }
   }, [
     inView,
@@ -114,7 +127,7 @@ export default function About() {
       x: 0,
       transition: { duration: dur, ease: "easeOut" },
     },
-    exit: { opacity: 0, x: -dist, transition: { duration: dur * 0.8 } }, // keluar ke kiri
+    exit: { opacity: 0, x: -dist, transition: { duration: dur * 0.8 } },
   };
 
   const fadeRight = {
@@ -124,7 +137,7 @@ export default function About() {
       x: 0,
       transition: { duration: dur, ease: "easeOut" },
     },
-    exit: { opacity: 0, x: dist, transition: { duration: dur * 0.8 } }, // keluar ke kanan
+    exit: { opacity: 0, x: dist, transition: { duration: dur * 0.8 } },
   };
 
   const fadeUp = {
@@ -155,7 +168,10 @@ export default function About() {
     },
   };
 
-  const handleAboutMeClick = () => window.scrollTo(0, 0);
+  const handleAboutMeClick = () => {
+    // Ganti dengan navigation logic Anda
+    console.log("Navigate to /about");
+  };
 
   return (
     <section
@@ -168,10 +184,10 @@ export default function About() {
       <div className="absolute top-12 right-24 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-15 left-16 w-64 h-64 bg-rose-500/15 rounded-full blur-3xl animate-pulse" />
 
-      {/* Konten utama */}
-      <div className="relative container mx-auto px-6 sm:px-10 md:px-16 max-w-6xl grid md:grid-cols-2 gap-12 items-start z-10">
+      {/* Konten utama - DIPERLEBAR */}
+      <div className="relative container mx-auto px-4 sm:px-8 md:px-12 lg:px-20 max-w-7xl grid md:grid-cols-2 gap-14 items-start z-10">
         {/* LEFT & RIGHT SECTION UNTUK TITLE DAN STATISTIK */}
-        <div className="md:col-span-2 grid md:grid-cols-2 gap-8 items-center">
+        <div className="md:col-span-2 grid md:grid-cols-2 gap-10 items-center">
           {/* LEFT - TITLE */}
           <div>
             <Motion.h4
@@ -201,7 +217,7 @@ export default function About() {
             variants={fadeRight}
             initial="hidden"
             animate={titleControls}
-            className="flex items-center justify-start md:justify-end gap-8"
+            className="flex items-center justify-start md:justify-end gap-10"
           >
             {/* Project */}
             <div className="flex flex-col items-center text-center">
@@ -228,8 +244,8 @@ export default function About() {
           </Motion.div>
         </div>
 
-        {/* RIGHT */}
-        <div className="md:col-span-2 w-full max-w-5xl grid md:grid-cols-2 gap-10">
+        {/* RIGHT - PARAGRAF DAN TOMBOL */}
+        <div className="md:col-span-2 w-full grid md:grid-cols-2 gap-12">
           {/* PARAGRAF KIRI */}
           <Motion.p
             ref={para1Ref}
