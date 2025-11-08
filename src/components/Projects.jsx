@@ -70,18 +70,23 @@ export default function Projects() {
 
           <Motion.a
             href="/projects"
-            className="group flex items-center gap-3 px-4 py-2 rounded-full bg-pink-700 dark:bg-pink-900 text-white font-sans font-normal shadow transition-all relative z-10 hover:bg-pink-600 dark:hover:bg-pink-800"
+            className="group flex items-center gap-3 px-4 py-2 rounded-full bg-pink-700 dark:bg-pink-900 font-sans font-normal shadow transition-all relative z-10 hover:bg-pink-600 dark:hover:bg-pink-800"
           >
-            <span>View All Projects</span>
+            {/* Teks tombol */}
+            <span className="ml-1 text-pink-100 dark:text-rose-100">
+              View All Projects
+            </span>
+
+            {/* Bulatan dengan ikon panah */}
             <Motion.span
               initial={{ x: 0 }}
               whileHover={{ x: 6 }}
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-pink-700 dark:bg-pink-700 transition-colors duration-300 group-hover:bg-pink-600 dark:group-hover:bg-pink-500"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-pink-200 dark:bg-pink-500 transition-colors duration-300 group-hover:bg-pink-200 dark:group-hover:bg-pink-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4 text-white"
+                className="w-4 h-4 text-pink-700 dark:text-pink-200"
                 fill="currentColor"
                 viewBox="0 0 16 16"
               >
@@ -109,7 +114,7 @@ export default function Projects() {
                   <h4 className="text-3xl font-bold text-pink-950 dark:text-pink-300 transition-colors duration-200">
                     {currentProject.title}
                   </h4>
-                  <p className="text-pink-800 dark:text-pink-200 leading-relaxed transition-colors duration-200 mt-2 mr-4 mt-3 text-justify">
+                  <p className="text-pink-800 dark:text-pink-200 leading-relaxed transition-colors duration-200 mr-4 mt-3 text-justify">
                     {currentProject.description}
                   </p>
                 </div>

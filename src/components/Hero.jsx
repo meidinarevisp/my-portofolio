@@ -89,11 +89,9 @@ export default function Hero() {
           <Motion.a
             href="#projects"
             className="h-12 px-6 flex items-center justify-center rounded-full border-2 border-pink-800 dark:border-pink-400 
-            text-pink-800 dark:text-pink-300 font-sans font-normal 
-            transition-all duration-300 
-            hover:bg-pink-100 dark:hover:bg-pink-800/40 
-            hover:shadow-[0_0_18px_rgba(255,105,180,0.75),0_0_28px_rgba(255,182,193,0.45)] 
-            dark:hover:shadow-[0_0_12px_rgba(255,182,193,0.4),0_0_24px_rgba(255,182,193,0.2)]"
+      text-pink-800 dark:text-pink-300 font-sans font-normal 
+      transition-all duration-300 
+      hover:bg-pink-100 dark:hover:bg-pink-800/40"
           >
             My Projects
           </Motion.a>
@@ -102,12 +100,10 @@ export default function Hero() {
           <Motion.a
             href="mailto:revimeidina72@gmail.com"
             className="h-12 px-6 flex items-center justify-center gap-2 rounded-full 
-            text-rose-100 bg-pink-700 dark:bg-pink-900 
-            font-sans font-normal 
-            transition-all duration-300 
-            hover:bg-pink-600 dark:hover:bg-pink-800 
-            hover:shadow-[0_0_22px_rgba(255,105,180,0.8),0_0_36px_rgba(255,182,193,0.5)] 
-            dark:hover:shadow-[0_0_14px_rgba(255,182,193,0.4),0_0_28px_rgba(255,182,193,0.2)]"
+      text-rose-100 bg-pink-700 dark:bg-pink-900 
+      font-sans font-normal 
+      transition-all duration-300 
+      hover:bg-pink-600 dark:hover:bg-pink-800"
           >
             Contact Me
             <HiOutlineMail className="text-lg" />

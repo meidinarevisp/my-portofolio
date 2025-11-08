@@ -292,21 +292,19 @@ export default function About() {
               className="mt-8 flex flex-col sm:flex-row gap-4 w-full"
             >
               <Motion.a
-                whileHover={{ boxShadow: "0 0 15px rgba(255,182,193,0.5)" }}
                 whileTap={{ scale: 0.95 }}
                 href="https://drive.google.com/file/d/1IAEXZ7E9A45bBxFj9r_tGwTdhOfoNsaK/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 px-6 h-12 
       w-full sm:w-auto rounded-full
-      bg-pink-700 dark:bg-pink-900 text-white font-sans font-normal
+      bg-pink-700 dark:bg-pink-900 text-pink-100 font-sans font-normal
       hover:bg-pink-600 dark:hover:bg-pink-800 transition-colors duration-300"
               >
                 Download CV <HiOutlineArrowDownTray className="text-lg" />
               </Motion.a>
 
               <Motion.button
-                whileHover={{ boxShadow: "0 0 15px rgba(255,182,193,0.3)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleAboutMeClick}
                 className="flex items-center justify-center gap-2 px-6 h-12 
