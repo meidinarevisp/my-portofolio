@@ -4,11 +4,11 @@ import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const fadeUp = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.8, ease: "easeOut" },
     },
   };
 
@@ -21,36 +21,31 @@ export default function Footer() {
   return (
     <footer
       className="
-        relative py-6
-        bg-[#ffe4e8] dark:bg-[#121010]
+        relative py-4 md:py-4
+        bg-white dark:bg-[#0a0a0a]
         transition-colors duration-700
         font-[Quicksand]
+        overflow-hidden
       "
     >
       <Motion.div
         variants={fadeUp}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate="visible"
         className="
-          container mx-auto px-8 
+          container mx-auto px-6
           flex flex-col md:flex-row items-center justify-between
-          gap-6 text-center md:text-left relative
+          text-center md:text-left gap-4
           md:max-w-6xl
         "
       >
-        {/* ===== Left: Copyright ===== */}
-        <p className="text-sm text-rose-700 dark:text-rose-300 font-sans tracking-wide order-3 md:order-1 w-full md:w-1/3">
+        {/* === LEFT === */}
+        <p className="text-xs md:text-sm text-rose-700 dark:text-rose-300 font-sans tracking-wide md:w-1/3">
           © {new Date().getFullYear()} All rights reserved
         </p>
 
-        {/* ===== Center: Social Icons (tengah simetris) ===== */}
-        <div
-          className="
-            flex items-center justify-center gap-4
-            order-1 md:order-2 w-full md:w-1/3
-          "
-        >
+        {/* === CENTER: Social Media Icons === */}
+        <div className="flex items-center justify-center gap-4 md:w-1/3">
           {socials.map((item, index) => (
             <Motion.a
               key={index}
@@ -59,14 +54,13 @@ export default function Footer() {
               rel="noreferrer"
               whileHover={{ scale: 1.15 }}
               className="
-                w-10 h-10 flex items-center justify-center
-                rounded-full shadow-sm 
-                bg-white/60 dark:bg-white/10
+                w-9 h-9 flex items-center justify-center
+                rounded-full border border-rose-200 dark:border-rose-800
+                bg-transparent
                 text-rose-700 dark:text-rose-200
-                hover:bg-white dark:hover:bg-white/20
+                hover:bg-rose-50 dark:hover:bg-rose-900/10
                 hover:text-rose-600 dark:hover:text-rose-100
-                transition-all duration-300
-                text-2xl
+                transition-all duration-300 text-lg
               "
             >
               {item.icon}
@@ -74,21 +68,12 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* ===== Right: Built With Text (2 baris, seimbang) ===== */}
-        <div
-          className="
-            text-xs text-rose-700 dark:text-rose-300 leading-relaxed 
-            font-[Poppins] font-normal tracking-wide 
-            order-2 md:order-3 w-full md:w-1/3 
-            text-center md:text-right
-          "
-        >
+        {/* === RIGHT === */}
+        <div className="text-[10px] md:text-[12px] text-rose-700 dark:text-rose-300 md:w-1/3 md:text-right leading-snug">
           <p>
-            <span className="text-rose-900 dark:text-rose-50">
-              Developed by{" "}
-              <span className="font-semibold text-rose-900 dark:text-rose-100">
-                Meidina Revi
-              </span>
+            Developed by{" "}
+            <span className="font-semibold text-rose-900 dark:text-rose-100">
+              Meidina Revi
             </span>
           </p>
           <p>
@@ -101,14 +86,6 @@ export default function Footer() {
           </p>
         </div>
       </Motion.div>
-
-      {/* ===== Subtle Texture Noise ===== */}
-      <div
-        className="
-          pointer-events-none absolute inset-0 opacity-[0.05]
-          bg-[url('https://www.transparenttextures.com/patterns/noise.png')]
-        "
-      />
     </footer>
   );
 }
