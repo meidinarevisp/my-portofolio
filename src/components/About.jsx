@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { motion as Motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
 
 export default function About() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
-  const navigate = useNavigate();
   const lastScrollY = useRef(0);
   const scrollDirection = useRef("down");
   const aboutTextControls = useAnimation();
@@ -182,30 +180,41 @@ export default function About() {
     },
   };
 
-  // Handler untuk navigasi ke halaman About menggunakan React Router
   const handleAboutMeClick = () => {
-    navigate("/about");
-    window.scrollTo(0, 0);
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
     <section
       id="about"
       ref={ref}
-      className="relative py-16 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a]"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden transition-colors duration-300 bg-white"
     >
-      {/* Background dekoratif */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />
-      <div className="absolute top-20 right-10 md:right-24 w-64 md:w-72 h-64 md:h-72 bg-pink-400/20 dark:bg-pink-600/15 rounded-full blur-3xl animate-pulse-slow" />
-      <div
-        className="absolute bottom-20 left-10 md:left-16 w-56 md:w-64 h-56 md:h-64 bg-rose-400/15 dark:bg-rose-600/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
-      />
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Retro Geometric Shapes - Hidden on mobile */}
+      <div className="hidden md:block absolute top-20 right-10 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5" />
+      <div className="hidden md:block absolute bottom-32 left-16 w-20 lg:w-24 h-20 lg:h-24 border-4 border-black opacity-5 rotate-45" />
 
       {/* Konten utama */}
       <div className="relative container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 max-w-6xl z-10">
         {/* Header Section */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center mb-10 md:mb-12">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 items-center mb-8 sm:mb-10 md:mb-12">
           {/* LEFT - TITLE */}
           <div>
             <Motion.div
@@ -213,10 +222,10 @@ export default function About() {
               variants={fadeDown}
               initial="hidden"
               animate={aboutTextControls}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50 mb-4"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white mb-3 sm:mb-4"
             >
-              <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-              <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide uppercase">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
                 About Me
               </span>
             </Motion.div>
@@ -226,12 +235,11 @@ export default function About() {
               variants={fadeLeft}
               initial="hidden"
               animate={titleControls}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black leading-tight uppercase"
             >
               <span className="block">Get to Know</span>
-              <span className="block bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-                About Me
-              </span>
+              <span className="block">About Me</span>
+              <div className="mt-2 sm:mt-3 w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-black" />
             </Motion.h2>
           </div>
 
@@ -241,32 +249,30 @@ export default function About() {
             variants={fadeRight}
             initial="hidden"
             animate={statsControls}
-            className="flex items-center justify-start md:justify-end gap-6 md:gap-8 lg:gap-10"
+            className="flex items-center justify-start md:justify-end gap-4 sm:gap-6 md:gap-8 lg:gap-10"
           >
             {/* Projects */}
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative flex flex-col items-center text-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl px-6 py-5 md:px-8 md:py-6 border border-pink-200/50 dark:border-pink-800/30 shadow-lg">
-                <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent mb-1">
+              <div className="relative flex flex-col items-center text-center bg-white backdrop-blur-sm px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 border-3 sm:border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-black mb-0.5 sm:mb-1">
                   15+
                 </h3>
-                <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 font-medium">
+                <p className="text-[10px] sm:text-xs md:text-sm text-black font-bold uppercase tracking-wider">
                   Projects
                 </p>
               </div>
             </div>
 
             {/* Divider */}
-            <div className="h-16 md:h-20 w-[2px] bg-gradient-to-b from-pink-400/40 via-rose-400/60 to-pink-400/40 dark:from-pink-600/30 dark:via-rose-600/50 dark:to-pink-600/30 rounded-full" />
+            <div className="h-12 sm:h-16 md:h-20 w-[2px] sm:w-[3px] bg-black" />
 
             {/* Experience */}
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-400/20 to-purple-500/20 dark:from-rose-600/10 dark:to-purple-700/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-              <div className="relative flex flex-col items-center text-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl px-6 py-5 md:px-8 md:py-6 border border-rose-200/50 dark:border-rose-800/30 shadow-lg">
-                <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-rose-600 to-purple-600 dark:from-rose-400 dark:to-purple-400 bg-clip-text text-transparent mb-1">
+              <div className="relative flex flex-col items-center text-center bg-white backdrop-blur-sm px-4 py-4 sm:px-6 sm:py-5 md:px-8 md:py-6 border-3 sm:border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group-hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:group-hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-black mb-0.5 sm:mb-1">
                   3+
                 </h3>
-                <p className="text-xs md:text-sm text-gray-700 dark:text-gray-300 font-medium">
+                <p className="text-[10px] sm:text-xs md:text-sm text-black font-bold uppercase tracking-wider">
                   Years
                 </p>
               </div>
@@ -275,7 +281,7 @@ export default function About() {
         </div>
 
         {/* Content Section */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* PARAGRAF KIRI */}
           <Motion.div
             ref={para1Ref}
@@ -284,14 +290,14 @@ export default function About() {
             animate={para1Controls}
             className="relative"
           >
-            <div className="absolute -left-2 top-0 w-1 h-full bg-gradient-to-b from-pink-500 via-rose-500 to-transparent rounded-full opacity-50" />
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm md:text-base lg:text-lg text-justify">
+            <div className="absolute -left-1 sm:-left-2 top-0 w-0.5 sm:w-1 h-full bg-black" />
+            <p className="text-black leading-relaxed text-xs sm:text-sm md:text-base lg:text-lg text-justify pl-1 sm:pl-0">
               My name is{" "}
-              <span className="font-bold text-pink-900 dark:text-pink-100">
+              <span className="font-black text-black">
                 Meidina Revi Sandra Pertiwi
               </span>
               , a{" "}
-              <span className="font-semibold text-pink-700 dark:text-rose-400">
+              <span className="font-bold text-black border-b-2 border-black">
                 Front-End Web Developer
               </span>{" "}
               who loves crafting clean and interactive user interfaces. I enjoy
@@ -301,7 +307,7 @@ export default function About() {
           </Motion.div>
 
           {/* PARAGRAF KANAN + BUTTONS */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <Motion.div
               ref={para2Ref}
               variants={fadeRight}
@@ -309,8 +315,8 @@ export default function About() {
               animate={para2Controls}
               className="relative"
             >
-              <div className="absolute -right-2 top-0 w-1 h-full bg-gradient-to-b from-rose-500 via-purple-500 to-transparent rounded-full opacity-50" />
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm md:text-base lg:text-lg text-justify">
+              <div className="absolute -right-1 sm:-right-2 top-0 w-0.5 sm:w-1 h-full bg-black" />
+              <p className="text-black leading-relaxed text-xs sm:text-sm md:text-base lg:text-lg text-justify pr-1 sm:pr-0">
                 I continuously learn new technologies to enhance performance and
                 user satisfaction. If you're looking for a dedicated developer
                 with an eye for detail and a genuine passion for building
@@ -324,7 +330,7 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={btnControls}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4"
+              className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4"
             >
               <Motion.a
                 whileTap={{ scale: 0.95 }}
@@ -332,11 +338,11 @@ export default function About() {
                 href="https://drive.google.com/file/d/1IAEXZ7E9A45bBxFj9r_tGwTdhOfoNsaK/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold text-sm md:text-base shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-300"
+                className="group flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 bg-black text-white font-bold text-xs sm:text-sm md:text-base border-2 border-black hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
               >
                 <span>Download CV</span>
                 <svg
-                  className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-y-0.5 transition-transform"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-y-0.5 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -354,11 +360,11 @@ export default function About() {
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
                 onClick={handleAboutMeClick}
-                className="group flex items-center justify-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full border-2 border-gray-300 dark:border-gray-700 hover:border-pink-600 dark:hover:border-pink-500 text-gray-900 dark:text-white font-semibold text-sm md:text-base transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900/10"
+                className="group flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 border-2 border-black text-black font-bold text-xs sm:text-sm md:text-base hover:bg-black hover:text-white transition-all duration-300 uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
               >
                 <span>About Me</span>
                 <svg
-                  className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

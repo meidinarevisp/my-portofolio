@@ -41,7 +41,7 @@ export default function CertificationsSection() {
       const checkExit = (ref, control) => {
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
-        if (rect.top > screenHeight * 0.7) control.start("exit");
+        if (rect.top > screenHeight * 0.75) control.start("exit");
       };
       checkExit(gridRef, gridControls);
       checkExit(titleRef, titleControls);
@@ -124,27 +124,62 @@ export default function CertificationsSection() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-white transition-colors duration-300"
     >
-      <div className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes - Hidden on mobile */}
+      <Motion.div
+        animate={{
+          rotate: [0, -180, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute top-16 lg:top-20 left-16 lg:left-20 w-28 lg:w-36 h-28 lg:h-36 border-4 border-black opacity-5 rotate-45"
+      />
+      <Motion.div
+        animate={{
+          y: [0, 30, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute bottom-16 lg:bottom-20 right-16 lg:right-20 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5 rounded-full"
       />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-6 md:mb-8">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <Motion.div
             ref={badgeRef}
             variants={fadeDown}
             initial="hidden"
             animate={badgeControls}
-            className="mb-5"
+            className="mb-4 sm:mb-5"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50">
-              <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-              <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
-                CONTINUOUS LEARNING
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
+                Continuous Learning
               </span>
             </div>
           </Motion.div>
@@ -154,21 +189,30 @@ export default function CertificationsSection() {
             variants={fadeDown}
             initial="hidden"
             animate={titleControls}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black mb-2 sm:mb-3 uppercase"
           >
-            Certifications &{" "}
-            <span className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Courses
-            </span>
+            Certifications & Courses
+            <Motion.div
+              animate={{
+                scaleX: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="mt-2 sm:mt-3 mx-auto w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-black"
+            />
           </Motion.h2>
         </div>
 
+        {/* Certifications Grid */}
         <Motion.div
           ref={gridRef}
           variants={scaleIn}
           initial="hidden"
           animate={gridControls}
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6"
         >
           {certifications.map((cert, idx) => (
             <Motion.div
@@ -179,21 +223,32 @@ export default function CertificationsSection() {
               animate="visible"
               className="group relative"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-2xl opacity-0 group-hover:opacity-20 blur transition-all duration-500" />
+              <div className="relative flex items-start gap-4 bg-white p-5 sm:p-6 border-2 sm:border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sm:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:-translate-y-1 overflow-hidden min-h-[140px] sm:min-h-[150px]">
+                {/* Scan line effect */}
+                <Motion.div
+                  animate={{
+                    y: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "linear",
+                  }}
+                  className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-transparent h-20 opacity-0 group-hover:opacity-100"
+                />
 
-              <div className="relative flex items-start gap-4 bg-white/90 dark:bg-gradient-to-br dark:from-[#1f1f1f] dark:to-[#181818] backdrop-blur-sm p-5 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 dark:hover:shadow-pink-900/30 transition-all duration-500 hover:-translate-y-2">
                 {/* Logo */}
                 <div className="relative flex-shrink-0">
-                  <div className="absolute -inset-1 bg-gradient-to-br from-pink-400/20 to-rose-400/20 dark:from-pink-600/20 dark:to-rose-600/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-50 dark:to-rose-50 overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-black bg-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                     {cert.logo ? (
                       <img
                         src={cert.logo}
                         alt={cert.institution}
-                        className="w-9 h-9 object-contain"
+                        className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
                       />
                     ) : (
-                      <span className="text-pink-700 dark:text-pink-300 font-bold text-xl">
+                      <span className="font-black text-lg sm:text-xl text-black">
                         {cert.institution.charAt(0)}
                       </span>
                     )}
@@ -201,46 +256,50 @@ export default function CertificationsSection() {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <h5 className="font-bold text-gray-900 dark:text-gray-50 mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                <div className="flex-1 min-w-0 pr-8">
+                  <h5 className="font-black text-sm sm:text-base text-black mb-2 uppercase tracking-tight group-hover:tracking-wide transition-all duration-300 line-clamp-2">
                     {cert.title}
                   </h5>
 
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center gap-1.5">
+                  <div className="flex flex-col gap-2 text-xs sm:text-sm">
+                    <div className="flex items-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-pink-600 dark:text-pink-400 flex-shrink-0"
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
+                        strokeWidth={2.5}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={2}
                           d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
                         />
                       </svg>
-                      <span className="truncate">{cert.institution}</span>
+                      <span className="text-black/70 font-bold truncate uppercase tracking-wide">
+                        {cert.institution}
+                      </span>
                     </div>
 
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-pink-600 dark:text-pink-400 flex-shrink-0"
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
+                        strokeWidth={2.5}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={2}
                           d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                         />
                       </svg>
-                      <span>{cert.period}</span>
+                      <span className="text-black/70 font-bold uppercase tracking-wide">
+                        {cert.period}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -251,28 +310,32 @@ export default function CertificationsSection() {
                     href={cert.credential}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full border-2 border-pink-600 dark:border-pink-400 text-pink-600 dark:text-pink-400 hover:bg-pink-600 hover:text-white dark:hover:bg-pink-400 dark:hover:text-pink-900 transition-all duration-300 group/link"
+                    className="absolute top-4 sm:top-5 right-4 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center border-2 border-black bg-white text-black hover:bg-black hover:text-white transition-all duration-300 group/link"
                     title="View Certificate"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="w-4 h-4"
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      strokeWidth={2.5}
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
                         d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                       />
                     </svg>
                   </a>
                 )}
 
-                {/* Bottom gradient line */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-l-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-r-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Bottom indicator */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
             </Motion.div>
           ))}

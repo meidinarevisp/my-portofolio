@@ -24,6 +24,7 @@ export default function EducationSection() {
       gpa: "GPA: 3.86 / 4.00",
       thesis:
         "Microscopic Image Analysis of Organic and Non-Organic Rice Based on Texture Features Using the K-Nearest Neighbor Method",
+      logo: umby,
     },
   ];
 
@@ -52,7 +53,7 @@ export default function EducationSection() {
       const checkExit = (ref, control) => {
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
-        if (rect.top > screenHeight * 0.7) control.start("exit");
+        if (rect.top > screenHeight * 0.75) control.start("exit");
       };
       checkExit(contentRef, contentControls);
       checkExit(titleRef, titleControls);
@@ -109,27 +110,62 @@ export default function EducationSection() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-white transition-colors duration-300"
     >
-      <div className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes - Hidden on mobile */}
+      <Motion.div
+        animate={{
+          rotate: [0, 180, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute top-16 lg:top-20 right-16 lg:right-20 w-28 lg:w-36 h-28 lg:h-36 border-4 border-black opacity-5 rotate-45"
+      />
+      <Motion.div
+        animate={{
+          y: [0, 30, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute bottom-16 lg:bottom-20 left-16 lg:left-20 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5 rounded-full"
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-6 md:mb-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <Motion.div
             ref={badgeRef}
             variants={fadeDown}
             initial="hidden"
             animate={badgeControls}
-            className="mb-5"
+            className="mb-4 sm:mb-5"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50">
-              <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-              <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
-                ACADEMIC BACKGROUND
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
+                Academic Background
               </span>
             </div>
           </Motion.div>
@@ -139,15 +175,24 @@ export default function EducationSection() {
             variants={fadeDown}
             initial="hidden"
             animate={titleControls}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black mb-2 sm:mb-3 uppercase"
           >
-            My{" "}
-            <span className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Education
-            </span>
+            Education
+            <Motion.div
+              animate={{
+                scaleX: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="mt-2 sm:mt-3 mx-auto w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-black"
+            />
           </Motion.h2>
         </div>
 
+        {/* Education Content */}
         <Motion.div
           ref={contentRef}
           variants={fadeUp}
@@ -160,102 +205,87 @@ export default function EducationSection() {
               whileHover={{ y: -4 }}
               className="group relative"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500" />
+              <div className="relative bg-white p-6 sm:p-8 border-2 sm:border-3 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden">
+                {/* Scan line effect */}
+                <Motion.div
+                  animate={{
+                    y: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "linear",
+                  }}
+                  className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-transparent h-20 opacity-0 group-hover:opacity-100"
+                />
 
-              <div className="relative flex flex-col md:flex-row items-center md:items-start gap-6 bg-white/90 dark:bg-gradient-to-br dark:from-[#1f1f1f] dark:to-[#181818] backdrop-blur-sm p-8 rounded-3xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 dark:hover:shadow-pink-900/30 transition-all duration-500">
-                {/* Logo container */}
-                <div className="relative flex-shrink-0">
-                  <div className="absolute -inset-2 bg-gradient-to-br from-pink-400/20 to-rose-400/20 dark:from-pink-600/20 dark:to-rose-600/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative w-24 h-24 md:w-28 md:h-28 flex items-center justify-center bg-white dark:bg-[#2a2a2a] rounded-2xl p-4 shadow-md group-hover:scale-110 transition-transform duration-500">
-                    <img
-                      src={umby}
-                      alt={edu.school}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
-                    {edu.school}
-                  </h3>
-
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 mb-3">
-                    <span className="text-sm font-semibold text-pink-700 dark:text-pink-300">
-                      {edu.degree}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-3 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-pink-600 dark:text-pink-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span>{edu.period}</span>
+                {/* Content Layout */}
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                  {/* Logo */}
+                  <div className="relative flex-shrink-0">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center border-2 border-black bg-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                      <img
+                        src={edu.logo}
+                        alt={edu.school}
+                        className="w-full h-full object-contain p-2"
+                      />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-4 h-4 text-pink-600 dark:text-pink-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        />
-                      </svg>
-                      <span className="font-semibold text-gray-700 dark:text-gray-300">
-                        {edu.gpa}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-xl sm:text-2xl font-black text-black mb-2 uppercase tracking-tight group-hover:tracking-wide transition-all duration-300">
+                      {edu.school}
+                    </h3>
+
+                    <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
+                      <span className="text-xs sm:text-sm font-bold text-black uppercase tracking-wide">
+                        {edu.degree}
                       </span>
                     </div>
-                  </div>
 
-                  <div className="relative p-4 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/10 dark:to-rose-900/10 rounded-xl border border-pink-100 dark:border-pink-800/30">
-                    <div className="flex items-start gap-2 mb-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5 text-pink-600 dark:text-pink-400 flex-shrink-0 mt-0.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                        />
-                      </svg>
-                      <div>
-                        <h4 className="text-sm font-bold text-pink-700 dark:text-pink-300 mb-1">
-                          Thesis
-                        </h4>
-                        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed italic">
-                          {edu.thesis}
-                        </p>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-4 text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1 h-1 bg-black" />
+                        <span className="text-xs sm:text-sm text-black/70 font-bold uppercase tracking-wider">
+                          {edu.period}
+                        </span>
                       </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1 h-1 bg-black" />
+                        <span className="text-xs sm:text-sm font-black text-black uppercase tracking-wider">
+                          {edu.gpa}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Thesis */}
+                    <div className="relative p-4 bg-white border-2 border-black">
+                      <div className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 bg-black mt-1.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-black text-black mb-2 uppercase tracking-wider">
+                            Thesis
+                          </h4>
+                          <p className="text-xs sm:text-sm text-black/80 leading-relaxed">
+                            {edu.thesis}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Corner accent */}
+                      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-black" />
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom gradient line */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+                {/* Corner accents */}
+                <div className="absolute top-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-l-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-r-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Bottom indicator */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </div>
             </Motion.div>
           ))}

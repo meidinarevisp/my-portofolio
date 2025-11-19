@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -13,20 +12,9 @@ import ContactMe from "./pages/ContactMe";
 import Footer from "./components/Footer";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Dark mode effect
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
   return (
     <Router>
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Header />
       <ScrollToTop />
       <Routes>
         {/* Home Page */}

@@ -1,11 +1,48 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion as Motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
-import projects from "../data/projects";
+
+// Sample projects data
+const projects = [
+  {
+    id: 1,
+    title: "E-Commerce Platform",
+    description:
+      "A modern e-commerce platform built with React and Node.js, featuring real-time inventory management, secure payment integration, and responsive design for seamless shopping experience across all devices.",
+    category: "Web Development",
+    tags: ["React", "Node.js", "MongoDB"],
+    image:
+      "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+    caseStudyUrl: "#",
+    liveUrl: "#",
+  },
+  {
+    id: 2,
+    title: "Portfolio Website",
+    description:
+      "A stunning portfolio website with modern animations and interactions. Features include dark mode, smooth scrolling, and dynamic content loading for an engaging user experience.",
+    category: "UI/UX Design",
+    tags: ["React", "Framer Motion", "Tailwind"],
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    caseStudyUrl: "#",
+    liveUrl: "#",
+  },
+  {
+    id: 3,
+    title: "Task Management App",
+    description:
+      "An intuitive task management application with drag-and-drop functionality, team collaboration features, and real-time updates to boost productivity and streamline workflows.",
+    category: "App Development",
+    tags: ["Vue.js", "Firebase", "TypeScript"],
+    image:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop",
+    caseStudyUrl: "#",
+    liveUrl: "#",
+  },
+];
 
 export default function Projects() {
-  const navigate = useNavigate();
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -111,7 +148,6 @@ export default function Projects() {
   };
 
   const handleViewAllClick = () => {
-    navigate("/projects");
     window.scrollTo(0, 0);
   };
 
@@ -164,42 +200,58 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-white transition-colors duration-300"
     >
-      {/* Animated gradient orbs */}
-      <div className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Retro Shapes - Hidden on mobile */}
+      <div className="hidden md:block absolute top-20 left-10 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5 rotate-45 animate-pulse-slow" />
       <div
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
+        className="hidden md:block absolute bottom-32 right-16 w-32 lg:w-40 h-32 lg:h-40 border-4 border-black opacity-5"
         style={{ animationDelay: "2s" }}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <Motion.div
           ref={titleRef}
           variants={fadeDown}
           initial="hidden"
           animate={titleControls}
-          className="text-center mb-6 md:mb-8"
+          className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-16"
         >
           <Motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50 mb-5"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white mb-4 sm:mb-5"
           >
-            <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-            <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+            <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
               FEATURED WORK
             </span>
           </Motion.div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4">
-            Selected{" "}
-            <span className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Projects
-            </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black mb-2 sm:mb-3 md:mb-4 uppercase">
+            Selected <span className="border-b-4 border-black">Projects</span>
           </h2>
-          <p className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="w-8 sm:w-10 md:w-12 h-0.5 sm:h-1 bg-black" />
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black rotate-45" />
+            <div className="w-8 sm:w-10 md:w-12 h-0.5 sm:h-1 bg-black" />
+          </div>
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-black max-w-2xl mx-auto font-medium px-4">
             These are a few of the projects I've worked on recently
           </p>
         </Motion.div>
@@ -210,7 +262,7 @@ export default function Projects() {
           variants={scaleIn}
           initial="hidden"
           animate={cardControls}
-          className="mb-6 md:mb-8"
+          className="mb-6 sm:mb-8 md:mb-10"
         >
           <AnimatePresence mode="wait">
             <Motion.div
@@ -221,24 +273,90 @@ export default function Projects() {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="relative"
             >
-              <div className="group relative bg-white dark:bg-gradient-to-br dark:from-[#1a1a1a] dark:to-[#151515] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl border border-gray-200 dark:border-gray-800 hover:shadow-pink-500/10 dark:hover:shadow-pink-900/20 transition-all duration-500">
-                <div className="absolute inset-0 bg-gradient-to-t from-pink-600/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none" />
-                <div className="grid lg:grid-cols-2 gap-0">
-                  {/* Left - Image */}
-                  <div className="relative h-56 sm:h-64 md:h-72 lg:h-80 overflow-hidden">
-                    <Motion.img
-                      src={currentProject.image}
-                      alt={currentProject.title}
-                      className="w-full h-full object-cover"
-                      initial={{ scale: 1.08 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.8 }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r" />
-                    <div className="absolute top-2 left-2 md:top-3 md:left-3 px-2.5 py-1 rounded-full bg-white/15 dark:bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-1.5 shadow-sm">
+              <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+                {/* Left - Laptop Mockup */}
+                <div className="relative">
+                  {/* Laptop Frame */}
+                  <div className="relative bg-black p-2 sm:p-3 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                    {/* Screen */}
+                    <div className="relative bg-white border-2 border-black overflow-hidden aspect-video">
+                      <Motion.img
+                        src={currentProject.image}
+                        alt={currentProject.title}
+                        className="w-full h-full object-cover"
+                        initial={{ scale: 1.05 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                      />
+
+                      {/* Category Badge on Screen */}
+                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-1 sm:px-2.5 sm:py-1 bg-white border-2 border-black flex items-center gap-1 sm:gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                        <div className="w-1 h-1 bg-black" />
+                        <span className="text-[8px] sm:text-[9px] font-bold text-black tracking-wider uppercase">
+                          {currentProject.category}
+                        </span>
+                      </div>
+
+                      {/* Counter on Screen */}
+                      <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 flex items-center gap-1.5 sm:gap-2">
+                        <div className="text-xl sm:text-2xl md:text-3xl font-black text-white drop-shadow-lg">
+                          {String(currentIndex + 1).padStart(2, "0")}
+                        </div>
+                        <div className="h-5 sm:h-6 md:h-8 w-0.5 bg-white drop-shadow-lg" />
+                        <div className="text-xs sm:text-sm font-bold text-white tracking-wider drop-shadow-lg">
+                          {String(projects.length).padStart(2, "0")}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Laptop Base */}
+                    <div className="h-1 sm:h-1.5 bg-black mt-1" />
+                  </div>
+                </div>
+
+                {/* Right - Project Info */}
+                <div className="space-y-4 sm:space-y-5">
+                  {/* Category Badge */}
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 border-2 border-black bg-white">
+                    <div className="w-1.5 h-1.5 bg-black" />
+                    <span className="text-[10px] sm:text-xs font-bold text-black tracking-widest uppercase">
+                      {currentProject.category}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-black leading-tight uppercase">
+                    {currentProject.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-black text-xs sm:text-sm md:text-base leading-relaxed font-medium">
+                    {currentProject.description}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2">
+                    {currentProject.tags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2.5 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-bold bg-white text-black border-2 border-black uppercase tracking-wider"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
+                    <a
+                      href={currentProject.caseStudyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm md:text-base bg-black text-white font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                    >
+                      <span>Case Study</span>
                       <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-3 h-3 text-white/80"
+                        className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -246,96 +364,35 @@ export default function Projects() {
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeWidth={1.8}
-                          d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"
+                          strokeWidth={2}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
                         />
                       </svg>
-                      <span className="text-[10px] md:text-xs font-light text-white/85 tracking-[0.07em]">
-                        {currentProject.category}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-3 left-3 md:bottom-5 md:left-5 flex items-center gap-2 md:gap-3">
-                      <div className="text-4xl md:text-5xl font-bold text-white/20">
-                        {String(currentIndex + 1).padStart(2, "0")}
-                      </div>
-                      <div className="h-8 w-0.5 bg-white/30" />
-                      <div className="text-xs md:text-sm font-medium text-white/80">
-                        {String(projects.length).padStart(2, "0")}
-                      </div>
-                    </div>
-                  </div>
+                    </a>
 
-                  {/* Right - Content */}
-                  <div className="p-5 md:p-7 lg:p-8 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
-                        {currentProject.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed mb-4 md:mb-5 text-justify">
-                        {currentProject.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2 mb-5 md:mb-6">
-                        {currentProject.tags.map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1.5 md:px-3.5 md:py-1.5 text-xs md:text-sm font-medium bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 text-pink-900 dark:text-pink-300 rounded-full border border-pink-200 dark:border-pink-800/50"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-3 md:gap-4">
-                      <a
-                        href={currentProject.caseStudyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-2.5 text-sm md:text-base bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/40 hover:-translate-y-0.5"
+                    <a
+                      href={currentProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm md:text-base bg-white border-2 border-black text-black font-bold uppercase tracking-wider hover:bg-black hover:text-white transition-all duration-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                    >
+                      <span>Visit Website</span>
+                      <svg
+                        className="w-3 h-3 sm:w-4 sm:h-4 group-hover:rotate-45 transition-transform"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        <span>View Case Study</span>
-                        <svg
-                          className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M17 8l4 4m0 0l-4 4m4-4H3"
-                          />
-                        </svg>
-                      </a>
-
-                      <a
-                        href={currentProject.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-2.5 text-sm md:text-base bg-transparent border-2 border-gray-300 dark:border-gray-700 hover:border-pink-600 dark:hover:border-pink-500 text-gray-900 dark:text-white font-semibold rounded-full transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900/10 hover:-translate-y-0.5"
-                      >
-                        <span>Live Site</span>
-                        <svg
-                          className="w-4 h-4 md:w-5 md:h-5 group-hover:rotate-45 transition-transform"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </a>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
                   </div>
                 </div>
-
-                <div className="absolute top-0 right-0 w-20 md:w-24 h-20 md:h-24 bg-gradient-to-bl from-pink-500/10 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-20 md:w-24 h-20 md:h-24 bg-gradient-to-tr from-rose-500/10 to-transparent pointer-events-none" />
               </div>
             </Motion.div>
           </AnimatePresence>
@@ -347,17 +404,17 @@ export default function Projects() {
           variants={fadeUp}
           initial="hidden"
           animate={navigationControls}
-          className="flex flex-col sm:flex-row items-center justify-between gap-4 md:gap-6"
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6"
         >
           {/* Navigation Arrows */}
-          <div className="flex items-center gap-3 order-2 sm:order-1">
+          <div className="flex items-center gap-2 sm:gap-3 order-2 sm:order-1">
             <button
               onClick={handlePrev}
-              className="group w-11 h-11 md:w-12 md:h-12 rounded-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 hover:border-pink-500 dark:hover:border-pink-500 flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+              className="group w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-white border-2 border-black flex items-center justify-center transition-all duration-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-black"
               aria-label="Previous project"
             >
               <svg
-                className="w-5 h-5 text-gray-600 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-black group-hover:text-white transition-colors"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -372,11 +429,11 @@ export default function Projects() {
             </button>
             <button
               onClick={handleNext}
-              className="group w-11 h-11 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 flex items-center justify-center transition-all duration-300 shadow-lg shadow-pink-500/25 hover:shadow-xl hover:-translate-y-0.5"
+              className="group w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-black border-2 border-black flex items-center justify-center transition-all duration-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-white"
               aria-label="Next project"
             >
               <svg
-                className="w-5 h-5 text-white"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:text-black transition-colors"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -392,15 +449,15 @@ export default function Projects() {
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex items-center gap-2 md:gap-3 order-1 sm:order-2">
+          <div className="flex items-center gap-2 order-1 sm:order-2">
             {projects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => handleDotClick(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-1.5 sm:h-2 transition-all duration-300 border border-black ${
                   index === currentIndex
-                    ? "w-10 md:w-12 bg-gradient-to-r from-pink-600 to-rose-600"
-                    : "w-2 bg-gray-300 dark:bg-gray-700 hover:bg-pink-400 dark:hover:bg-pink-600"
+                    ? "w-8 sm:w-10 md:w-12 bg-black"
+                    : "w-1.5 sm:w-2 bg-white hover:bg-gray-300"
                 }`}
                 aria-label={`Go to project ${index + 1}`}
               />
@@ -412,11 +469,11 @@ export default function Projects() {
             onClick={handleViewAllClick}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 text-sm md:text-base font-semibold text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors order-3"
+            className="group flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base font-bold text-black transition-all order-3 uppercase tracking-wider border-b-2 border-transparent hover:border-black"
           >
             <span>View All</span>
             <svg
-              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

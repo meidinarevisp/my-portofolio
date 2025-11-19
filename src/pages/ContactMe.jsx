@@ -41,11 +41,11 @@ export default function ContactMe() {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          strokeWidth={2.5}
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
           />
         </svg>
@@ -53,7 +53,6 @@ export default function ContactMe() {
       label: "Email",
       value: "revimeidina72@gmail.com",
       href: "mailto:revimeidina72@gmail.com",
-      gradient: "from-pink-500 to-rose-500",
     },
     {
       icon: (
@@ -64,7 +63,6 @@ export default function ContactMe() {
       label: "LinkedIn",
       value: "Connect with me",
       href: "#",
-      gradient: "from-blue-500 to-blue-600",
     },
     {
       icon: (
@@ -75,96 +73,78 @@ export default function ContactMe() {
       label: "GitHub",
       value: "View my code",
       href: "#",
-      gradient: "from-gray-700 to-gray-900",
     },
   ];
 
   return (
     <section
       id="contact-page"
-      className="relative min-h-screen flex flex-col justify-center items-center px-6 lg:px-8 py-20 bg-gradient-to-b from-pink-50/50 via-white to-rose-50/30 dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] overflow-hidden transition-colors duration-700"
+      className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-white overflow-hidden transition-colors duration-700"
     >
-      {/* Animated Background Elements */}
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes */}
       <Motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl"
-      />
-      <Motion.div
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.1, 0.25, 0.1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl"
-      />
-      <Motion.div
-        animate={{
-          x: [0, 50, 0],
-          y: [0, -30, 0],
-          opacity: [0.05, 0.15, 0.05],
+          rotate: [0, 180, 0],
+          scale: [1, 1.1, 1],
         }}
         transition={{
           duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 w-96 h-96 bg-gradient-to-br from-rose-400/15 to-pink-500/15 dark:from-rose-600/8 dark:to-pink-700/8 rounded-full blur-3xl"
+        className="hidden lg:block absolute top-20 left-20 w-32 h-32 border-4 border-black opacity-5 rotate-45"
+      />
+      <Motion.div
+        animate={{
+          rotate: [0, -180, 0],
+          scale: [1, 1.15, 1],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden lg:block absolute bottom-32 right-16 w-40 h-40 border-4 border-black opacity-5"
+      />
+      <Motion.div
+        animate={{
+          y: [0, 30, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute top-1/3 right-1/4 w-28 h-28 border-4 border-black opacity-5 rounded-full"
       />
 
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <Motion.div
-          key={i}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 3 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.5,
-          }}
-          className="absolute w-2 h-2 bg-pink-400 dark:bg-pink-600 rounded-full"
-          style={{
-            left: `${20 + i * 15}%`,
-            top: `${30 + i * 10}%`,
-          }}
-        />
-      ))}
-
       {/* CONTENT */}
-      <div className="relative z-10 text-center max-w-4xl flex flex-col items-center gap-8">
+      <div className="relative z-10 text-center max-w-4xl flex flex-col items-center gap-6 sm:gap-8">
         {/* Badge */}
         <Motion.div
           variants={scaleIn}
           initial="hidden"
           animate="visible"
           whileHover={{ scale: 1.05 }}
-          className="inline-flex items-center mt-12 gap-2.5 px-6 py-3 rounded-full bg-white/80 dark:bg-gray-800/80 border border-pink-200/50 dark:border-pink-800/50 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/10 backdrop-blur-md"
+          className="inline-flex items-center mt-8 sm:mt-12 gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
         >
-          <Motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [1, 0.7, 1],
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400"
-          />
-          <span className="text-xs md:text-sm font-bold tracking-widest uppercase bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+          <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
             Let's Connect
           </span>
         </Motion.div>
@@ -174,35 +154,22 @@ export default function ContactMe() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white tracking-tight"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase"
         >
           Get In{" "}
-          <Motion.span
-            animate={{
-              backgroundPosition: ["0%", "100%", "0%"],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            style={{
-              backgroundSize: "200% auto",
-            }}
-            className="relative inline-block bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent"
-          >
+          <Motion.span className="relative inline-block">
             Touch
             {/* Decorative underline */}
             <Motion.div
               animate={{
-                scaleX: [0.3, 1, 0.3],
+                scaleX: [0, 1, 0],
               }}
               transition={{
                 duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 rounded-full"
+              className="absolute -bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-black"
             />
           </Motion.span>
         </Motion.h1>
@@ -212,7 +179,7 @@ export default function ContactMe() {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl"
+          className="text-sm sm:text-base md:text-lg text-black/70 leading-relaxed max-w-2xl font-bold px-4"
         >
           I'd love to hear from you! Whether you have a question, want to
           collaborate on a project, or just want to say hello, feel free to
@@ -224,38 +191,47 @@ export default function ContactMe() {
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full mt-6 sm:mt-8 px-4"
         >
           {contactMethods.map((method, index) => (
             <Motion.a
               key={index}
               href={method.href}
               variants={fadeUp}
-              whileHover={{ y: -8, scale: 1.03 }}
+              whileHover={{ y: -6, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group relative p-6 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-pink-200/50 dark:border-pink-900/30 shadow-lg hover:shadow-2xl hover:shadow-pink-500/10 dark:hover:shadow-pink-900/20 transition-all duration-500 overflow-hidden"
+              className="group relative p-5 sm:p-6 bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden"
             >
-              {/* Gradient overlay on hover */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${method.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+              {/* Scan line effect */}
+              <Motion.div
+                animate={{
+                  y: ["-100%", "200%"],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatDelay: 2,
+                  ease: "linear",
+                }}
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-transparent h-20 opacity-0 group-hover:opacity-100"
               />
 
               {/* Icon */}
               <Motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className={`w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br ${method.gradient} flex items-center justify-center text-white shadow-lg`}
+                className="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-4 border-2 border-black bg-white flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-all duration-300"
               >
                 {method.icon}
               </Motion.div>
 
               {/* Label */}
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-base sm:text-lg font-black text-black mb-2 uppercase tracking-tight">
                 {method.label}
               </h3>
 
               {/* Value */}
-              <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+              <p className="text-xs sm:text-sm text-black/70 font-bold uppercase tracking-wide line-clamp-1">
                 {method.value}
               </p>
 
@@ -263,22 +239,29 @@ export default function ContactMe() {
               <Motion.div
                 initial={{ x: 0, opacity: 0 }}
                 whileHover={{ x: 5, opacity: 1 }}
-                className="absolute bottom-4 right-4 text-pink-600 dark:text-pink-400"
+                className="absolute bottom-4 right-4 text-black"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4 sm:w-5 sm:h-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  strokeWidth={2.5}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
               </Motion.div>
+
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* Bottom indicator */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </Motion.a>
           ))}
         </Motion.div>
@@ -288,53 +271,45 @@ export default function ContactMe() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-8"
+          className="mt-6 sm:mt-8 px-4"
         >
           <Motion.a
             href="mailto:revimeidina72@gmail.com"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-500 dark:to-rose-500 text-white font-bold text-lg shadow-xl shadow-pink-500/30 dark:shadow-pink-900/30 hover:shadow-2xl hover:shadow-pink-500/50 dark:hover:shadow-pink-900/50 transition-all duration-300 overflow-hidden"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-black text-white font-bold text-base sm:text-lg border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden uppercase tracking-wide"
           >
-            {/* Animated background */}
-            <Motion.div
-              animate={{
-                x: isHovered ? 0 : -100,
-              }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600"
-            />
-
             {/* Content */}
-            <span className="relative z-10 flex items-center gap-3">
+            <span className="relative z-10 flex items-center gap-2 sm:gap-3">
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                strokeWidth={2.5}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              Send Me an Email
+              <span className="hidden sm:inline">Send Me an Email</span>
+              <span className="sm:hidden">Email Me</span>
               <Motion.svg
                 animate={{ x: isHovered ? 5 : 0 }}
                 transition={{ duration: 0.3 }}
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                strokeWidth={2.5}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 />
               </Motion.svg>
@@ -357,14 +332,17 @@ export default function ContactMe() {
         </Motion.div>
 
         {/* Decorative text */}
-        <Motion.p
+        <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="text-sm text-gray-500 dark:text-gray-500 mt-6"
+          className="flex items-center gap-2 mt-4 sm:mt-6 px-3 py-2 border-2 border-black bg-white"
         >
-          I typically respond within 24 hours ⚡
-        </Motion.p>
+          <div className="w-1 h-1 bg-black" />
+          <p className="text-xs sm:text-sm text-black font-bold uppercase tracking-wider">
+            I typically respond within 24 hours
+          </p>
+        </Motion.div>
       </div>
 
       {/* Decorative floating shapes */}
@@ -377,7 +355,7 @@ export default function ContactMe() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-dashed border-pink-300/30 dark:border-pink-700/30 rounded-full"
+        className="absolute top-1/4 left-1/4 w-24 sm:w-32 h-24 sm:h-32 border-2 border-dashed border-black opacity-10"
       />
       <Motion.div
         animate={{
@@ -388,7 +366,7 @@ export default function ContactMe() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute bottom-1/4 right-1/4 w-40 h-40 border-2 border-dashed border-rose-300/30 dark:border-rose-700/30 rounded-full"
+        className="absolute bottom-1/4 right-1/4 w-32 sm:w-40 h-32 sm:h-40 border-2 border-dashed border-black opacity-10 rounded-full"
       />
     </section>
   );

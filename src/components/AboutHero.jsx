@@ -1,149 +1,234 @@
-import React from "react";
-import { motion as Motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion as Motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import profile from "../assets/images/profile.png";
 
 export default function AboutHero() {
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
+  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
+  const lastScrollY = useRef(0);
+  const scrollDirection = useRef("down");
+
+  // Controls
+  const badgeControls = useAnimation();
+  const titleControls = useAnimation();
+  const imageControls = useAnimation();
+  const contentControls = useAnimation();
+
+  const badgeRef = useRef(null);
+  const titleRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+
+  // Scroll direction tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      scrollDirection.current = currentY > lastScrollY.current ? "down" : "up";
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Sequential entrance on scroll down
+  useEffect(() => {
+    if (inView && scrollDirection.current === "down") {
+      badgeControls.start("visible");
+      setTimeout(() => titleControls.start("visible"), 150);
+      setTimeout(() => imageControls.start("visible"), 300);
+      setTimeout(() => contentControls.start("visible"), 450);
+    }
+  }, [inView, badgeControls, titleControls, imageControls, contentControls]);
+
+  // Exit animation on scroll up
+  useEffect(() => {
+    const handleExit = () => {
+      if (scrollDirection.current !== "up") return;
+      const screenHeight = window.innerHeight;
+      const checkExit = (ref, control) => {
+        const rect = ref.current?.getBoundingClientRect();
+        if (!rect) return;
+        if (rect.top > screenHeight * 0.75) control.start("exit");
+      };
+      checkExit(contentRef, contentControls);
+      checkExit(imageRef, imageControls);
+      checkExit(titleRef, titleControls);
+      checkExit(badgeRef, badgeControls);
+    };
+    window.addEventListener("scroll", handleExit, { passive: true });
+    return () => window.removeEventListener("scroll", handleExit);
+  }, [badgeControls, titleControls, imageControls, contentControls]);
+
+  // Re-enter on scroll down
+  useEffect(() => {
+    const handleReEnter = () => {
+      if (scrollDirection.current !== "down") return;
+      const screenHeight = window.innerHeight;
+      const reEnterThreshold = screenHeight * 1.2;
+      const checkReEnter = (ref, control) => {
+        const rect = ref.current?.getBoundingClientRect();
+        if (!rect) return;
+        if (rect.top < reEnterThreshold && rect.bottom > 0) {
+          control.start("visible");
+        }
+      };
+      checkReEnter(badgeRef, badgeControls);
+      setTimeout(() => checkReEnter(titleRef, titleControls), 150);
+      setTimeout(() => checkReEnter(imageRef, imageControls), 300);
+      setTimeout(() => checkReEnter(contentRef, contentControls), 450);
+    };
+    window.addEventListener("scroll", handleReEnter, { passive: true });
+    return () => window.removeEventListener("scroll", handleReEnter);
+  }, [badgeControls, titleControls, imageControls, contentControls]);
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+  const dur = isMobile ? 0.45 : 0.65;
+  const dist = isMobile ? 20 : 30;
+
+  // Animation variants
+  const fadeDown = {
+    hidden: { opacity: 0, y: -dist },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.65, ease: "easeOut" },
+      transition: { duration: dur, ease: "easeOut" },
     },
+    exit: { opacity: 0, y: -dist, transition: { duration: dur * 0.8 } },
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: dist },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: dur, ease: "easeOut" },
+    },
+    exit: { opacity: 0, y: dist, transition: { duration: dur * 0.8 } },
   };
 
   const fadeLeft = {
-    hidden: { opacity: 0, x: -50 },
+    hidden: { opacity: 0, x: -30 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.65, ease: "easeOut", delay: 0.2 },
+      transition: { duration: dur, ease: "easeOut" },
     },
+    exit: { opacity: 0, x: -30, transition: { duration: dur * 0.8 } },
   };
 
   const fadeRight = {
-    hidden: { opacity: 0, x: 50 },
+    hidden: { opacity: 0, x: 30 },
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.65, ease: "easeOut", delay: 0.3 },
+      transition: { duration: dur, ease: "easeOut" },
     },
+    exit: { opacity: 0, x: 30, transition: { duration: dur * 0.8 } },
   };
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300">
-      {/* Enhanced gradient orbs - lebih subtle dan modern */}
+    <section
+      ref={ref}
+      className="relative pt-24 sm:pt-24 md:pt-28 lg:pt-32 pb-12 sm:pb-16 md:pb-20 lg:pb-24 overflow-hidden bg-white transition-colors duration-300"
+    >
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes - Hidden on mobile */}
       <Motion.div
         animate={{
+          rotate: [0, 90, 0],
           scale: [1, 1.1, 1],
-          opacity: [0.15, 0.25, 0.15],
         }}
         transition={{
-          duration: 4,
+          duration: 8,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl"
+        className="hidden md:block absolute top-16 lg:top-20 left-8 lg:left-10 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5"
       />
       <Motion.div
         animate={{
+          rotate: [0, -90, 0],
           scale: [1, 1.15, 1],
-          opacity: [0.15, 0.3, 0.15],
         }}
         transition={{
-          duration: 5,
+          duration: 10,
           repeat: Infinity,
           ease: "easeInOut",
           delay: 2,
         }}
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl"
+        className="hidden md:block absolute bottom-16 lg:bottom-20 right-8 lg:right-10 w-28 lg:w-32 h-28 lg:h-32 border-4 border-black opacity-5 rotate-45"
       />
 
-      <Motion.div
-        animate={{
-          y: [0, 30, 0],
-          x: [0, 20, 0],
-          opacity: [0.08, 0.15, 0.08],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-rose-400/15 to-pink-500/15 dark:from-rose-600/8 dark:to-pink-700/8 rounded-full blur-2xl"
-      />
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Modern Badge dengan glassmorphism */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Badge */}
         <Motion.div
-          variants={fadeUp}
+          ref={badgeRef}
+          variants={fadeDown}
           initial="hidden"
-          animate="visible"
-          className="flex justify-center mb-8"
+          animate={badgeControls}
+          className="flex justify-center mb-4 sm:mb-5 md:mb-6"
         >
           <Motion.div
             whileHover={{ scale: 1.05, y: -2 }}
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/80 dark:bg-gray-800/80 border border-pink-200/50 dark:border-pink-800/50 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/10 backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
           >
             <Motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400"
+              className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black"
             />
-            <span className="text-xs md:text-sm font-bold bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent tracking-wider">
-              GET TO KNOW ME
+            <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
+              Get to Know Me
             </span>
           </Motion.div>
         </Motion.div>
 
-        {/* Modern Title dengan gradient animation */}
+        {/* Title */}
         <Motion.h2
-          variants={fadeUp}
+          ref={titleRef}
+          variants={fadeDown}
           initial="hidden"
-          animate="visible"
-          className="text-center text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white tracking-tight"
+          animate={titleControls}
+          className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase mb-8 sm:mb-10 md:mb-12"
         >
-          More About{" "}
-          <Motion.span
+          More About Me
+          <Motion.div
             animate={{
-              backgroundPosition: ["0%", "100%", "0%"],
+              scaleX: [0, 1, 0],
             }}
             transition={{
-              duration: 5,
+              duration: 3,
               repeat: Infinity,
-              ease: "linear",
+              ease: "easeInOut",
             }}
-            style={{
-              backgroundSize: "200% auto",
-            }}
-            className="relative inline-block bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent"
-          >
-            Me
-            {/* Decorative underline */}
-            <Motion.div
-              animate={{
-                scaleX: [0, 1, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 rounded-full"
-            />
-          </Motion.span>
+            className="mt-2 sm:mt-3 mx-auto w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-black"
+          />
         </Motion.h2>
 
         {/* Content Grid */}
-        <div className="flex flex-col md:flex-row items-center gap-16 mt-16 md:mt-20">
-          {/* Modern Profile Image Container */}
+        <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+          {/* Profile Image Container */}
           <Motion.div
-            variants={fadeLeft}
+            ref={imageRef}
+            variants={isMobile ? fadeUp : fadeLeft}
             initial="hidden"
-            animate="visible"
+            animate={imageControls}
             className="relative flex-shrink-0 group"
           >
-            {/* Animated gradient ring */}
+            {/* Animated Outer Ring */}
             <Motion.div
               animate={{
                 rotate: 360,
@@ -153,110 +238,76 @@ export default function AboutHero() {
                 repeat: Infinity,
                 ease: "linear",
               }}
-              className="absolute -inset-2 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-20 dark:group-hover:opacity-30 blur-xl transition-opacity duration-500"
+              className="absolute -inset-2 sm:-inset-3 border-2 border-dashed border-black opacity-20 rounded-full"
             />
 
-            {/* Outer decorative ring */}
-            <Motion.div
-              animate={{
-                rotate: -360,
-              }}
-              transition={{
-                duration: 25,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute -inset-4 rounded-full border border-dashed border-pink-300/30 dark:border-pink-700/30"
-            />
-
-            {/* Main image container */}
+            {/* Main Image Container */}
             <Motion.div
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
-              className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-full border-[6px] border-white dark:border-gray-900 shadow-2xl shadow-pink-500/10 dark:shadow-pink-900/20 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-gray-800 dark:to-gray-900"
+              className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-56 md:h-56 lg:w-64 lg:h-64 overflow-hidden border-4 sm:border-[5px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sm:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] bg-white group-hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:group-hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 rounded-full"
             >
-              {/* Subtle gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-pink-500/5 dark:to-pink-900/10 z-10" />
+              {/* Grid Overlay */}
+              <div
+                className="absolute inset-0 z-10 opacity-5"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(to right, #000 1px, transparent 1px),
+                    linear-gradient(to bottom, #000 1px, transparent 1px)
+                  `,
+                  backgroundSize: "20px 20px",
+                }}
+              />
 
-              {/* Shimmer effect */}
+              {/* Scan Line Effect */}
               <Motion.div
                 animate={{
-                  x: ["-100%", "100%"],
+                  y: ["-100%", "200%"],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
                   repeatDelay: 2,
-                  ease: "easeInOut",
+                  ease: "linear",
                 }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent z-20 skew-x-12"
+                className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-transparent z-20 h-16 sm:h-20"
               />
 
-              {/* Profile Image */}
+              {/* Placeholder for Profile Image */}
               <img
                 src={profile}
                 alt="Meidina Revi Sandra Pertiwi"
-                className="w-full h-full object-cover mt-10 scale-125 group-hover:scale-[1.28] transition-transform duration-700"
+                className="w-full h-full object-cover mt-8 sm:mt-10 scale-125 group-hover:scale-[1.28] transition-transform duration-700"
                 style={{ objectPosition: "center 55%" }}
               />
             </Motion.div>
 
-            {/* Floating particles */}
-            <Motion.div
-              animate={{
-                y: [0, -15, 0],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-pink-400/30 to-rose-500/30 dark:from-pink-600/20 dark:to-rose-700/20 rounded-full blur-2xl"
-            />
-            <Motion.div
-              animate={{
-                y: [0, 15, 0],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.5,
-              }}
-              className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-tr from-purple-400/30 to-pink-500/30 dark:from-purple-600/20 dark:to-pink-700/20 rounded-full blur-2xl"
-            />
-
-            {/* Modern corner accents */}
-            <div className="absolute -top-8 -left-8 w-16 h-16 border-t-2 border-l-2 border-pink-300/40 dark:border-pink-700/40 rounded-tl-3xl" />
-            <div className="absolute -bottom-8 -right-8 w-16 h-16 border-b-2 border-r-2 border-rose-300/40 dark:border-rose-700/40 rounded-br-3xl" />
+            {/* Corner Accents */}
+            <div className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 w-10 sm:w-12 h-10 sm:h-12 border-t-3 border-l-3 sm:border-t-4 sm:border-l-4 border-black" />
+            <div className="absolute -bottom-3 sm:-bottom-4 -right-3 sm:-right-4 w-10 sm:w-12 h-10 sm:h-12 border-b-3 border-r-3 sm:border-b-4 sm:border-r-4 border-black" />
           </Motion.div>
 
-          {/* Modern Text Content */}
+          {/* Text Content */}
           <Motion.div
-            variants={fadeRight}
+            ref={contentRef}
+            variants={isMobile ? fadeUp : fadeRight}
             initial="hidden"
-            animate="visible"
-            className="flex-1 text-center md:text-left space-y-6"
+            animate={contentControls}
+            className="flex-1 text-center md:text-left space-y-4 sm:space-y-5"
           >
-            {/* Name with modern styling */}
-            <Motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            {/* Name & Role */}
+            <div>
               <Motion.h3
-                whileHover={{ x: 5 }}
-                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent mb-3"
+                whileHover={{ x: isMobile ? 0 : 5 }}
+                className="text-xl sm:text-2xl md:text-3xl font-black text-black mb-2 sm:mb-3 uppercase tracking-tight"
               >
                 Meidina Revi Sandra Pertiwi
               </Motion.h3>
 
-              {/* Role badge with glassmorphism */}
+              {/* Role Badge */}
               <Motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
-                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200/60 dark:border-pink-800/60 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/10 backdrop-blur-sm"
+                className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-black text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
               >
                 <Motion.div
                   animate={{
@@ -264,30 +315,25 @@ export default function AboutHero() {
                     opacity: [1, 0.7, 1],
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400"
+                  className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white"
                 />
-                <span className="text-sm font-bold bg-gradient-to-r from-pink-700 to-rose-700 dark:from-pink-300 dark:to-rose-300 bg-clip-text text-transparent">
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                   Front-End Web Developer
                 </span>
               </Motion.div>
-            </Motion.div>
+            </div>
 
-            {/* Description with modern card design */}
-            <Motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="space-y-5"
-            >
+            {/* Description Cards */}
+            <div className="space-y-3 sm:space-y-4">
               <Motion.div
-                whileHover={{ x: 5 }}
-                className="p-6 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-pink-100/50 dark:border-pink-900/30 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/5"
+                whileHover={{ x: isMobile ? 0 : 5 }}
+                className="p-3 sm:p-4 md:p-5 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
               >
-                <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-black leading-relaxed text-justify">
                   I'm an enthusiastic Web and Mobile Developer who enjoys
                   transforming ideas into functional, user-friendly
                   applications. Skilled in{" "}
-                  <span className="font-bold bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">
+                  <span className="font-black text-black border-b-2 border-black">
                     HTML, CSS, JavaScript, PHP, MySQL, and Flutter
                   </span>
                   , I've developed projects ranging from interactive websites to
@@ -296,12 +342,12 @@ export default function AboutHero() {
               </Motion.div>
 
               <Motion.div
-                whileHover={{ x: 5 }}
-                className="p-6 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-pink-100/50 dark:border-pink-900/30 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/5"
+                whileHover={{ x: isMobile ? 0 : 5 }}
+                className="p-3 sm:p-4 md:p-5 bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
               >
-                <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-black leading-relaxed text-justify">
                   I value{" "}
-                  <span className="font-bold bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">
+                  <span className="font-black text-black border-b-2 border-black">
                     collaboration, adaptability, and attention to detail
                   </span>{" "}
                   in every project. Whether developing responsive interfaces or
@@ -309,15 +355,10 @@ export default function AboutHero() {
                   create solutions that are both efficient and meaningful.
                 </p>
               </Motion.div>
-            </Motion.div>
+            </div>
 
-            {/* Modern skill pills */}
-            <Motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="flex flex-wrap gap-3 justify-center md:justify-start"
-            >
+            {/* Skill Pills */}
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start pt-2">
               {[
                 { name: "Web Development", icon: "🌐" },
                 { name: "Mobile Apps", icon: "📱" },
@@ -328,21 +369,31 @@ export default function AboutHero() {
                   key={skill.name}
                   whileHover={{ scale: 1.1, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                  className="group relative px-4 py-2.5 rounded-xl bg-gradient-to-r from-white to-pink-50/50 dark:from-gray-800 dark:to-pink-900/20 border border-pink-200/60 dark:border-pink-800/60 shadow-md shadow-pink-500/5 dark:shadow-pink-900/5 backdrop-blur-sm cursor-pointer overflow-hidden"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + index * 0.1 }}
+                  className="group relative px-2.5 py-1.5 sm:px-3 sm:py-2 bg-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer overflow-hidden transition-all duration-300"
                 >
-                  {/* Hover gradient effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-pink-500/0 via-rose-500/10 to-pink-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                  <Motion.div
+                    animate={{
+                      x: ["-100%", "100%"],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 3,
+                      ease: "linear",
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent"
+                  />
 
-                  <span className="relative flex items-center gap-2 text-sm font-bold text-gray-800 dark:text-gray-200">
-                    <span className="text-base">{skill.icon}</span>
+                  <span className="relative flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-black uppercase tracking-wide">
+                    <span className="text-xs sm:text-sm">{skill.icon}</span>
                     {skill.name}
                   </span>
                 </Motion.div>
               ))}
-            </Motion.div>
+            </div>
           </Motion.div>
         </div>
       </div>

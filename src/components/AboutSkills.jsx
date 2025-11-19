@@ -22,8 +22,6 @@ import {
   SiFigma,
 } from "react-icons/si";
 import { MdOutlineWork, MdPerson } from "react-icons/md";
-import responsive from "../assets/images/responsive.png";
-import api from "../assets/images/api.png";
 
 export default function AboutSkills() {
   const [activeTab, setActiveTab] = useState("technical");
@@ -43,52 +41,106 @@ export default function AboutSkills() {
   const gridRef = useRef(null);
 
   const technicalSkills = [
-    { name: "HTML", icon: <SiHtml5 className="text-orange-600 w-7 h-7" /> },
-    { name: "CSS", icon: <SiCss3 className="text-blue-600 w-7 h-7" /> },
-    { name: "SASS", icon: <SiSass className="text-pink-500 w-7 h-7" /> },
+    {
+      name: "HTML",
+      icon: <SiHtml5 className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "CSS",
+      icon: <SiCss3 className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "SASS",
+      icon: <SiSass className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
     {
       name: "JavaScript",
-      icon: <SiJavascript className="text-yellow-500 w-7 h-7" />,
+      icon: <SiJavascript className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       name: "Bootstrap",
-      icon: <SiBootstrap className="text-purple-600 w-7 h-7" />,
+      icon: <SiBootstrap className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       name: "Tailwind CSS",
-      icon: <SiTailwindcss className="text-sky-500 w-7 h-7" />,
+      icon: <SiTailwindcss className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
-    { name: "React", icon: <SiReact className="text-cyan-500 w-7 h-7" /> },
-    { name: "Vite", icon: <SiVite className="text-violet-500 w-7 h-7" /> },
+    {
+      name: "React",
+      icon: <SiReact className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "Vite",
+      icon: <SiVite className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
     {
       name: "Node.js",
-      icon: <SiNodedotjs className="text-green-600 w-7 h-7" />,
+      icon: <SiNodedotjs className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
       name: "Express.js",
-      icon: <SiExpress className="text-gray-600 dark:text-gray-200 w-7 h-7" />,
+      icon: <SiExpress className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
-    { name: "PHP", icon: <SiPhp className="text-indigo-700 w-7 h-7" /> },
-    { name: "MySQL", icon: <SiMysql className="text-sky-600 w-7 h-7" /> },
-    { name: "Flutter", icon: <SiFlutter className="text-sky-500 w-7 h-7" /> },
-    { name: "Dart", icon: <SiDart className="text-blue-400 w-7 h-7" /> },
-    { name: "Git", icon: <SiGit className="text-orange-500 w-7 h-7" /> },
+    {
+      name: "PHP",
+      icon: <SiPhp className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "MySQL",
+      icon: <SiMysql className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "Flutter",
+      icon: <SiFlutter className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "Dart",
+      icon: <SiDart className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
+    {
+      name: "Git",
+      icon: <SiGit className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
     {
       name: "GitHub",
-      icon: <SiGithub className="text-gray-800 dark:text-white w-7 h-7" />,
+      icon: <SiGithub className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
-    { name: "Figma", icon: <SiFigma className="text-pink-600 w-7 h-7" /> },
+    {
+      name: "Figma",
+      icon: <SiFigma className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
+    },
     {
       name: "Microsoft Office",
-      icon: <FaMicrosoft className="text-orange-700 w-7 h-7" />,
+      icon: <FaMicrosoft className="text-black w-5 h-5 sm:w-6 sm:h-6" />,
     },
     {
-      name: "Responsive Web Design",
-      icon: <img src={responsive} alt="responsive" className="w-7 h-7" />,
+      name: "Responsive Design",
+      icon: (
+        <svg
+          className="w-5 h-5 sm:w-6 sm:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <rect x="2" y="3" width="20" height="14" rx="2" strokeWidth="2" />
+          <line x1="8" y1="21" x2="16" y2="21" strokeWidth="2" />
+          <line x1="12" y1="17" x2="12" y2="21" strokeWidth="2" />
+        </svg>
+      ),
     },
     {
       name: "API Integration",
-      icon: <img src={api} alt="api" className="w-7 h-7" />,
+      icon: (
+        <svg
+          className="w-5 h-5 sm:w-6 sm:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle cx="12" cy="12" r="3" strokeWidth="2" />
+          <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" strokeWidth="2" />
+        </svg>
+      ),
     },
   ];
 
@@ -129,7 +181,7 @@ export default function AboutSkills() {
       const checkExit = (ref, control) => {
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
-        if (rect.top > screenHeight * 0.7) control.start("exit");
+        if (rect.top > screenHeight * 0.75) control.start("exit");
       };
       checkExit(gridRef, gridControls);
       checkExit(tabsRef, tabsControls);
@@ -199,7 +251,7 @@ export default function AboutSkills() {
   const getItemDelay = (index, itemsPerRow = 5) => {
     const row = Math.floor(index / itemsPerRow);
     const col = index % itemsPerRow;
-    return row * 0.15 + col * 0.05;
+    return row * 0.1 + col * 0.03;
   };
 
   const cardVariant = {
@@ -208,15 +260,15 @@ export default function AboutSkills() {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { delay: getItemDelay(i), duration: 0.4, ease: "easeOut" },
+      transition: { delay: getItemDelay(i), duration: 0.35, ease: "easeOut" },
     }),
     exit: (i = 0) => ({
       opacity: 0,
-      y: -20,
+      y: -15,
       scale: 0.95,
       transition: {
-        delay: getItemDelay(i) * 0.3,
-        duration: 0.3,
+        delay: getItemDelay(i) * 0.2,
+        duration: 0.25,
         ease: "easeIn",
       },
     }),
@@ -225,29 +277,63 @@ export default function AboutSkills() {
   return (
     <section
       ref={ref}
-      className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-white transition-colors duration-300"
     >
-      {/* Gradient orbs */}
-      <div className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes - Hidden on mobile */}
+      <Motion.div
+        animate={{
+          rotate: [0, 90, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute top-16 lg:top-20 right-16 lg:right-20 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5"
+      />
+      <Motion.div
+        animate={{
+          rotate: [0, -90, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+        className="hidden md:block absolute bottom-16 lg:bottom-20 left-16 lg:left-20 w-20 lg:w-24 h-20 lg:h-24 border-4 border-black opacity-5 rotate-45"
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <Motion.div
             ref={badgeRef}
             variants={fadeDown}
             initial="hidden"
             animate={badgeControls}
-            className="mb-5"
+            className="mb-4 sm:mb-5"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50">
-              <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-              <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
-                MY EXPERTISE
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+              <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
+                My Expertise
               </span>
             </div>
           </Motion.div>
@@ -257,12 +343,20 @@ export default function AboutSkills() {
             variants={fadeDown}
             initial="hidden"
             animate={titleControls}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black mb-2 sm:mb-3 uppercase"
           >
-            Technical &{" "}
-            <span className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-              Soft Skills
-            </span>
+            Technical & Soft Skills
+            <Motion.div
+              animate={{
+                scaleX: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="mt-2 sm:mt-3 mx-auto w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-black"
+            />
           </Motion.h2>
         </div>
 
@@ -272,29 +366,29 @@ export default function AboutSkills() {
           variants={fadeUp}
           initial="hidden"
           animate={tabsControls}
-          className="flex justify-center mb-8 md:mb-10"
+          className="flex justify-center mb-6 sm:mb-8"
         >
-          <div className="inline-flex bg-white dark:bg-[#1a1a1a] rounded-full p-1 border border-pink-200 dark:border-pink-800/50 shadow-sm">
+          <div className="inline-flex bg-white p-1 border-2 sm:border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
             <button
               onClick={() => setActiveTab("technical")}
-              className={`flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-2.5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 activeTab === "technical"
-                  ? "bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-lg shadow-pink-500/25"
-                  : "text-gray-800 dark:text-gray-200 hover:text-pink-600 dark:hover:text-pink-400"
+                  ? "bg-black text-white"
+                  : "text-black hover:bg-black/5"
               }`}
             >
-              <MdOutlineWork className="w-4 h-4 md:w-5 md:h-5" />
+              <MdOutlineWork className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Technical</span>
             </button>
             <button
               onClick={() => setActiveTab("soft")}
-              className={`flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-2.5 rounded-full text-sm md:text-base font-semibold transition-all duration-300 ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
                 activeTab === "soft"
-                  ? "bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-lg shadow-pink-500/25"
-                  : "text-gray-800 dark:text-gray-200 hover:text-pink-600 dark:hover:text-pink-400"
+                  ? "bg-black text-white"
+                  : "text-black hover:bg-black/5"
               }`}
             >
-              <MdPerson className="w-4 h-4 md:w-5 md:h-5" />
+              <MdPerson className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Soft Skills</span>
             </button>
           </div>
@@ -314,7 +408,7 @@ export default function AboutSkills() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4"
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3 md:gap-4"
               >
                 {technicalSkills.map((skill, i) => (
                   <Motion.div
@@ -323,22 +417,34 @@ export default function AboutSkills() {
                     variants={cardVariant}
                     className="group relative"
                   >
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-2xl opacity-0 group-hover:opacity-20 blur transition-all duration-500" />
-                    <div className="relative bg-white/80 dark:bg-gradient-to-br dark:from-[#1f1f1f] dark:to-[#181818] backdrop-blur-sm rounded-2xl p-4 md:p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 dark:hover:shadow-pink-900/30 transition-all duration-500 hover:-translate-y-2 hover:scale-105">
-                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-pink-500/10 via-rose-500/10 to-purple-500/10" />
-                      <div className="relative flex flex-col items-center gap-2.5 text-center">
+                    <div className="relative bg-white backdrop-blur-sm p-3 sm:p-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:-translate-y-1">
+                      {/* Scan line effect */}
+                      <Motion.div
+                        animate={{
+                          y: ["-100%", "200%"],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 3,
+                          ease: "linear",
+                        }}
+                        className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-transparent h-8 sm:h-10 opacity-0 group-hover:opacity-100"
+                      />
+
+                      <div className="relative flex flex-col items-center gap-2 text-center">
                         <div className="relative">
-                          <div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-rose-400/20 dark:from-pink-600/20 dark:to-rose-600/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="relative p-2.5 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                          <div className="p-1.5 sm:p-2 bg-white border-2 border-black transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                             {skill.icon}
                           </div>
                         </div>
-                        <p className="font-bold text-xs md:text-sm text-gray-900 dark:text-gray-50 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                        <p className="font-bold text-[9px] sm:text-[10px] md:text-xs text-black uppercase tracking-wide group-hover:tracking-wider transition-all duration-300 line-clamp-2">
                           {skill.name}
                         </p>
                       </div>
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/30 dark:from-white/10 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+                      {/* Bottom indicator */}
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                     </div>
                   </Motion.div>
                 ))}
@@ -349,7 +455,7 @@ export default function AboutSkills() {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5"
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4"
               >
                 {softSkills.map((skill, i) => (
                   <Motion.div
@@ -358,20 +464,35 @@ export default function AboutSkills() {
                     variants={cardVariant}
                     className="group relative"
                   >
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-25 blur-lg transition-all duration-500" />
-                    <div className="relative bg-white/90 dark:bg-gradient-to-br dark:from-[#1f1f1f] dark:to-[#181818] backdrop-blur-sm rounded-2xl p-6 md:p-7 border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 dark:hover:shadow-pink-900/30 transition-all duration-500 hover:-translate-y-2 text-center overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-rose-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-pink-400/10 to-transparent rounded-full group-hover:scale-150 transition-transform duration-700" />
-                      <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-gradient-to-tr from-rose-400/10 to-transparent rounded-full group-hover:scale-150 transition-transform duration-700" />
-                      <div className="relative">
-                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 mb-3 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                          <div className="w-2 h-2 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 animate-pulse" />
-                        </div>
-                        <p className="font-bold text-sm md:text-base text-gray-900 dark:text-gray-50 leading-relaxed group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">
+                    <div className="relative bg-white backdrop-blur-sm p-4 sm:p-5 border-2 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:-translate-y-2 text-center overflow-hidden">
+                      {/* Diagonal stripes on hover */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage: `repeating-linear-gradient(
+                              45deg,
+                              transparent,
+                              transparent 10px,
+                              rgba(0,0,0,0.02) 10px,
+                              rgba(0,0,0,0.02) 20px
+                            )`,
+                          }}
+                        />
+                      </div>
+
+                      {/* Corner accents */}
+                      <div className="absolute top-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-r-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute bottom-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-l-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                      <div className="relative flex items-center justify-center min-h-[60px] sm:min-h-[70px]">
+                        <p className="font-bold text-xs sm:text-sm text-black leading-relaxed uppercase tracking-wide group-hover:tracking-wider transition-all duration-300">
                           {skill}
                         </p>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+
+                      {/* Bottom bar */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
                     </div>
                   </Motion.div>
                 ))}

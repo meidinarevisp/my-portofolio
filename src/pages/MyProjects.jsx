@@ -39,139 +39,116 @@ export default function MyProjects() {
     return (
       <Motion.div
         variants={itemVariants}
-        whileHover={{ y: -12 }}
-        className="group relative bg-white/80 dark:bg-gray-900/80 rounded-3xl overflow-hidden backdrop-blur-sm border border-pink-200/50 dark:border-pink-900/30 transition-all duration-500 hover:shadow-2xl hover:shadow-pink-500/10 dark:hover:shadow-pink-900/20 hover:border-pink-300/80 dark:hover:border-pink-700/50"
+        whileHover={{ y: -8 }}
+        className="group relative bg-white border-2 sm:border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden"
       >
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/0 via-rose-500/0 to-purple-500/0 group-hover:from-pink-500/5 group-hover:via-rose-500/5 group-hover:to-purple-500/5 transition-all duration-500 z-10 pointer-events-none" />
+        {/* Scan line effect */}
+        <Motion.div
+          animate={{
+            y: ["-100%", "200%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatDelay: 2,
+            ease: "linear",
+          }}
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-transparent h-20 opacity-0 group-hover:opacity-100 z-30 pointer-events-none"
+        />
 
         {/* Image Container */}
-        <div className="relative overflow-hidden h-64">
+        <div className="relative overflow-hidden h-48 sm:h-56 md:h-64 border-b-2 border-black">
           <Motion.img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
           />
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-all duration-500" />
 
-          {/* Shimmer Effect */}
-          <Motion.div
-            animate={{
-              x: ["-100%", "100%"],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "easeInOut",
-            }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12"
-          />
+          {/* Number Badge */}
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-black bg-white text-black font-black text-base sm:text-xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-20 group-hover:rotate-12 transition-transform duration-300">
+            {String(index + 1).padStart(2, "0")}
+          </div>
 
           {/* Tags Overlay */}
-          <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-20">
-            {project.tags.map((tag, idx) => (
+          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 flex flex-wrap gap-1.5 sm:gap-2 z-20">
+            {project.tags.slice(0, 3).map((tag, idx) => (
               <Motion.span
                 key={idx}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.1 * idx }}
-                className="text-xs font-bold px-3 py-1.5 rounded-full bg-white/90 dark:bg-gray-900/90 text-pink-700 dark:text-pink-300 backdrop-blur-md shadow-lg border border-pink-200/50 dark:border-pink-800/50"
+                className="text-[10px] sm:text-xs font-bold px-2.5 py-1 border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wider"
               >
                 {tag}
               </Motion.span>
             ))}
           </div>
-
-          {/* Number Badge */}
-          <div className="absolute top-4 right-4 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white font-bold text-lg shadow-lg z-20">
-            {String(index + 1).padStart(2, "0")}
-          </div>
         </div>
 
         {/* Content */}
-        <div className="relative p-6 space-y-4 z-20">
+        <div className="relative p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
           {/* Title */}
           <Motion.h3
-            whileHover={{ x: 5 }}
-            className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300"
+            whileHover={{ x: 3 }}
+            className="text-lg sm:text-xl font-black text-black line-clamp-2 uppercase tracking-tight group-hover:tracking-wide transition-all duration-300"
           >
             {project.title}
           </Motion.h3>
 
           {/* Description */}
-          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
+          <p className="text-xs sm:text-sm text-black/70 line-clamp-2 leading-relaxed font-bold">
             {project.description}
           </p>
 
           {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-pink-300 dark:via-pink-700 to-transparent" />
+          <div className="h-0.5 bg-black" />
 
           {/* Buttons */}
           <div className="flex gap-3 pt-2">
             <Motion.a
               href={`/study-case/${project.id}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex-1 text-center px-5 py-3 text-sm font-bold text-white bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-500 dark:to-rose-500 rounded-full hover:shadow-lg hover:shadow-pink-500/50 dark:hover:shadow-pink-900/50 transition-all duration-300 relative overflow-hidden group/btn"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 text-center px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold text-white bg-black border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all duration-200 uppercase tracking-wider"
             >
-              <span className="relative z-10">Study Case</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-600 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+              Study Case
             </Motion.a>
 
             <Motion.a
               href={project.link}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex-1 text-center px-5 py-3 text-sm font-bold border-2 border-pink-600 dark:border-pink-500 text-pink-600 dark:text-pink-400 rounded-full hover:bg-pink-600 hover:text-white dark:hover:bg-pink-500 dark:hover:text-white transition-all duration-300 relative overflow-hidden group/btn"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex-1 text-center px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold border-2 border-black text-black bg-white hover:bg-black hover:text-white transition-all duration-200 uppercase tracking-wider flex items-center justify-center gap-2 group/btn"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                Visit
-                <svg
-                  className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </span>
+              <span>Visit</span>
+              <svg
+                className="w-3 h-3 sm:w-4 sm:h-4 group-hover/btn:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
             </Motion.a>
           </div>
         </div>
 
-        {/* Decorative Corner Elements */}
-        <Motion.div
-          animate={{
-            rotate: [0, 90, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute -top-8 -right-8 w-24 h-24 border-4 border-pink-200/30 dark:border-pink-800/30 rounded-full"
-        />
-        <Motion.div
-          animate={{
-            rotate: [0, -90, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute -bottom-8 -left-8 w-32 h-32 border-4 border-rose-200/30 dark:border-rose-800/30 rounded-full"
-        />
+        {/* Corner accents */}
+        <div className="absolute top-0 left-0 w-6 sm:w-8 h-6 sm:h-8 border-t-2 border-l-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute bottom-0 right-0 w-6 sm:w-8 h-6 sm:h-8 border-b-2 border-r-2 border-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Bottom indicator */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
       </Motion.div>
     );
   };
@@ -179,108 +156,97 @@ export default function MyProjects() {
   return (
     <section
       id="projects-page"
-      className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-b from-pink-50/50 via-white to-rose-50/30 dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-700"
+      className="relative pt-24 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-20 md:pb-24 lg:pb-32 overflow-hidden bg-white transition-colors duration-700"
     >
-      {/* Animated Background Elements */}
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #000 1px, transparent 1px),
+              linear-gradient(to bottom, #000 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Decorative Geometric Shapes */}
       <Motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-32 left-10 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl"
-      />
-      <Motion.div
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.1, 0.25, 0.1],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-        className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl"
-      />
-      <Motion.div
-        animate={{
-          x: [0, 30, 0],
-          y: [0, -30, 0],
-          opacity: [0.05, 0.15, 0.05],
+          rotate: [0, 180, 0],
+          scale: [1, 1.1, 1],
         }}
         transition={{
           duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 w-96 h-96 bg-gradient-to-br from-rose-400/15 to-pink-500/15 dark:from-rose-600/8 dark:to-pink-700/8 rounded-full blur-3xl"
+        className="hidden lg:block absolute top-20 left-20 w-32 h-32 border-4 border-black opacity-5 rotate-45"
+      />
+      <Motion.div
+        animate={{
+          rotate: [0, -180, 0],
+          scale: [1, 1.15, 1],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden lg:block absolute bottom-32 right-16 w-40 h-40 border-4 border-black opacity-5"
+      />
+      <Motion.div
+        animate={{
+          y: [0, 30, 0],
+          opacity: [0.03, 0.06, 0.03],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="hidden md:block absolute top-1/2 left-1/4 w-28 h-28 border-4 border-black opacity-5 rounded-full"
       />
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTEsIDExMywgMTMzLCAwLjA1KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30 dark:opacity-20" />
-
       {/* CONTENT */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
         {/* HEADER */}
         <Motion.div
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className="text-center mb-20 space-y-6"
+          className="text-center mb-10 sm:mb-16 md:mb-20 space-y-4 sm:space-y-6"
         >
           {/* Badge */}
           <Motion.div
             whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white/80 dark:bg-gray-800/80 border border-pink-200/50 dark:border-pink-800/50 shadow-lg shadow-pink-500/5 dark:shadow-pink-900/10 backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
           >
-            <Motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [1, 0.7, 1],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400"
-            />
-            <span className="text-xs md:text-sm font-bold tracking-widest uppercase bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400 bg-clip-text text-transparent">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
+            <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
               My Portfolio
             </span>
           </Motion.div>
 
           {/* Title */}
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase px-4 sm:px-0">
             All My{" "}
-            <Motion.span
-              animate={{
-                backgroundPosition: ["0%", "100%", "0%"],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              style={{
-                backgroundSize: "200% auto",
-              }}
-              className="relative inline-block bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent"
-            >
+            <Motion.span className="relative inline-block">
               Projects
               {/* Decorative underline */}
               <Motion.div
                 animate={{
-                  scaleX: [0.3, 1, 0.3],
+                  scaleX: [0, 1, 0],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 rounded-full"
+                className="absolute -bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-black"
               />
             </Motion.span>
           </h2>
@@ -290,14 +256,12 @@ export default function MyProjects() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed"
+            className="text-xs sm:text-sm md:text-base text-black/70 max-w-2xl mx-auto leading-relaxed font-bold px-4 sm:px-6 md:px-0"
           >
             A curated collection of projects I've built with passion and
             precision. From concept to deployment, each one tells a unique story
             of innovation and problem-solving.
           </Motion.p>
-
-          {/* Stats */}
         </Motion.div>
 
         {/* PROJECT GRID */}
@@ -306,7 +270,7 @@ export default function MyProjects() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 lg:gap-10"
         >
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
@@ -320,25 +284,25 @@ export default function MyProjects() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-32"
           >
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 flex items-center justify-center">
+            <div className="w-24 h-24 mx-auto mb-6 border-2 border-black bg-white flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-pink-600 dark:text-pink-400"
+                className="w-12 h-12 text-black"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
                   d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                 />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            <h3 className="text-2xl font-black text-black mb-3 uppercase">
               No Projects Yet
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-black/70 font-bold">
               Stay tuned! Amazing projects are coming soon.
             </p>
           </Motion.div>

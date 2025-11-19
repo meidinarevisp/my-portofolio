@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
-import { BsSun, BsMoon } from "react-icons/bs";
-import { FiMenu, FiX } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX } from "react-icons/fi";
 
-export default function Header({ darkMode, setDarkMode }) {
+export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -16,23 +15,26 @@ export default function Header({ darkMode, setDarkMode }) {
   const location = useLocation();
   const menuRef = useRef(null);
 
-  const menuItems = useMemo(() => ["Home", "About", "Projects", "Contact"], []);
+  const menuItems = useMemo(
+    () => [
+      { label: "Home", path: "/" },
+      { label: "About", path: "/about" },
+      { label: "Projects", path: "/projects" },
+      { label: "Contact", path: "/contact" },
+    ],
+    []
+  );
 
+  // Update active menu based on current path
   useEffect(() => {
-    switch (location.pathname) {
-      case "/about":
-        setActiveMenu("About");
-        break;
-      case "/projects":
-        setActiveMenu("Projects");
-        break;
-      case "/contact":
-        setActiveMenu("Contact");
-        break;
-      default:
-        setActiveMenu("Home");
+    const currentPath = location.pathname;
+    const currentItem = menuItems.find((item) => item.path === currentPath);
+    if (currentItem) {
+      setActiveMenu(currentItem.label);
+    } else {
+      setActiveMenu("Home");
     }
-  }, [location.pathname]);
+  }, [location.pathname, menuItems]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,22 +62,11 @@ export default function Header({ darkMode, setDarkMode }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    setMenuOpen(false);
-  };
-
   const handleMenuClick = (item) => {
-    setActiveMenu(item);
+    setActiveMenu(item.label);
     setMenuOpen(false);
-    const paths = {
-      Home: "/",
-      About: "/about",
-      Projects: "/projects",
-      Contact: "/contact",
-    };
-    navigate(paths[item] || "/");
-    window.scrollTo(0, 0);
+    navigate(item.path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const formatTime = (date) => {
@@ -103,14 +94,14 @@ export default function Header({ darkMode, setDarkMode }) {
     >
       <Motion.div
         layout
-        className={`relative flex items-center justify-between w-[95%] max-w-6xl px-6 py-3 rounded-full
-          border backdrop-blur-2xl transition-all duration-500
+        className={`relative flex items-center justify-between w-[95%] max-w-6xl px-6 py-3
+          bg-white border-4 border-black backdrop-blur-2xl transition-all duration-500
+          shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
           ${
-            darkMode
-              ? "bg-gradient-to-r from-[#1a0f10]/90 to-[#29181a]/90 border-rose-900/40 text-rose-100 shadow-[0_10px_30px_rgba(0,0,0,0.6)]"
-              : "bg-gradient-to-r from-white/90 to-rose-50/80 border-rose-200/60 text-rose-900 shadow-[0_10px_25px_rgba(0,0,0,0.08)]"
+            scrolled
+              ? "scale-[0.985] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+              : ""
           }
-          ${scrolled ? "scale-[0.985] shadow-lg" : ""}
         `}
       >
         {/* === Logo === */}
@@ -118,16 +109,12 @@ export default function Header({ darkMode, setDarkMode }) {
           initial={{ opacity: 0, x: -15 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          onClick={() => handleMenuClick("Home")}
+          onClick={() => handleMenuClick(menuItems[0])}
           className="flex items-center gap-3 cursor-pointer select-none"
         >
-          <span className="text-xl font-bold tracking-wide font-[Montserrat]">
-            <span className={darkMode ? "text-rose-200" : "text-pink-900"}>
-              MR
-            </span>
-            <span className={darkMode ? "text-rose-400" : "text-pink-500"}>
-              .
-            </span>
+          <span className="text-xl font-black tracking-wider uppercase">
+            <span className="text-black">MR</span>
+            <span className="text-black">.</span>
           </span>
         </Motion.div>
 
@@ -135,22 +122,15 @@ export default function Header({ darkMode, setDarkMode }) {
         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center space-x-8">
           {menuItems.map((item) => (
             <Motion.a
-              key={item}
+              key={item.label}
               onClick={() => handleMenuClick(item)}
-              className={`text-sm relative cursor-pointer transition-colors duration-300 font-[Montserrat]
-                ${
-                  darkMode
-                    ? "text-pink-200 hover:text-rose-400"
-                    : "text-rose-700 hover:text-rose-500"
-                }`}
+              className="text-sm relative cursor-pointer transition-colors duration-300 font-bold uppercase tracking-widest text-black hover:text-gray-600"
             >
-              {item}
-              {activeMenu === item && (
+              {item.label}
+              {activeMenu === item.label && (
                 <Motion.span
                   layoutId="underline"
-                  className={`absolute -bottom-1 left-0 h-[2px] rounded ${
-                    darkMode ? "bg-pink-400" : "bg-rose-700"
-                  }`}
+                  className="absolute -bottom-1 left-0 h-[3px] bg-black"
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
@@ -165,51 +145,10 @@ export default function Header({ darkMode, setDarkMode }) {
           <Motion.span
             animate={{ opacity: [1, 0.85, 1] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className={`hidden md:inline-block text-[13px] tracking-[0.15em]
-              ${darkMode ? "text-rose-200/70" : "text-rose-800/70"}`}
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            className="hidden md:inline-block text-[13px] tracking-[0.25em] font-bold text-black border-2 border-black px-3 py-1"
           >
             {formatTime(time)}
           </Motion.span>
-
-          {/* Dark Mode Toggle */}
-          <Motion.button
-            onClick={toggleDarkMode}
-            whileTap={{ scale: 0.9 }}
-            className={`relative w-16 h-8 rounded-full flex items-center transition-all duration-500 ${
-              darkMode ? "bg-rose-900" : "bg-rose-200"
-            }`}
-          >
-            <Motion.div
-              layout
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className={`absolute top-1 w-6 h-6 rounded-full shadow-md flex items-center justify-center bg-white ${
-                darkMode ? "right-1" : "left-1"
-              }`}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {darkMode ? (
-                  <Motion.div
-                    key="moon"
-                    initial={{ opacity: 0, rotate: -90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: 90 }}
-                  >
-                    <BsMoon className="text-pink-400" size={16} />
-                  </Motion.div>
-                ) : (
-                  <Motion.div
-                    key="sun"
-                    initial={{ opacity: 0, rotate: 90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: -90 }}
-                  >
-                    <BsSun className="text-amber-500" size={16} />
-                  </Motion.div>
-                )}
-              </AnimatePresence>
-            </Motion.div>
-          </Motion.button>
 
           {/* Burger */}
           <Motion.button
@@ -221,9 +160,9 @@ export default function Header({ darkMode, setDarkMode }) {
               initial={false}
               animate={{ rotate: menuOpen ? 180 : 0 }}
               transition={{ duration: 0.3 }}
-              className={darkMode ? "text-rose-300" : "text-rose-700"}
+              className="text-black"
             >
-              {menuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+              {menuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </Motion.div>
           </Motion.button>
         </div>
@@ -238,34 +177,23 @@ export default function Header({ darkMode, setDarkMode }) {
             animate={{ opacity: 1, y: 8 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.35 }}
-            className={`absolute top-16 w-[85%] max-w-md mx-auto rounded-2xl shadow-lg p-5 flex flex-col text-center border
-              ${
-                darkMode
-                  ? "bg-[#1b1112]/95 text-pink-100 border-rose-900/40"
-                  : "bg-white/95 text-rose-900 border-rose-200/70"
-              }`}
+            className="absolute top-16 w-[85%] max-w-md mx-auto shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-5 flex flex-col text-center border-4 border-black bg-white"
           >
             {menuItems.map((item, i, arr) => (
               <Motion.a
-                key={item}
+                key={item.label}
                 onClick={() => handleMenuClick(item)}
-                className={`text-base tracking-wide py-3 cursor-pointer font-[Montserrat]
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`text-base tracking-widest py-3 cursor-pointer font-bold uppercase transition-all duration-300
+                  ${i !== arr.length - 1 ? "border-b-2 border-black" : ""} 
                   ${
-                    i !== arr.length - 1
-                      ? darkMode
-                        ? "border-b border-rose-700/40"
-                        : "border-b border-rose-300/50"
-                      : ""
-                  } 
-                  ${
-                    activeMenu === item
-                      ? darkMode
-                        ? "font-bold text-pink-400"
-                        : "font-bold text-rose-700"
-                      : "font-medium"
+                    activeMenu === item.label
+                      ? "bg-black text-white"
+                      : "text-black hover:bg-gray-100"
                   }`}
               >
-                {item}
+                {item.label}
               </Motion.a>
             ))}
           </Motion.div>

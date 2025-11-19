@@ -64,7 +64,7 @@ export default function Contact() {
       if (scrollDirection.current !== "down") return;
 
       const screenHeight = window.innerHeight;
-      const reEnterThreshold = screenHeight * 1.2; // lebih longgar
+      const reEnterThreshold = screenHeight * 1.2;
       const checkReEnter = (ref, control) => {
         const rect = ref.current?.getBoundingClientRect();
         if (!rect) return;
@@ -111,27 +111,51 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-16 md:py-24 overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden bg-black transition-colors duration-300"
     >
-      {/* Gradient Orbs */}
-      <div className="absolute top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #fff 1px, transparent 1px),
+              linear-gradient(to bottom, #fff 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      {/* Scanline Effect */}
       <div
-        className="absolute bottom-20 -right-20 w-64 md:w-80 h-64 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
+        className="absolute inset-0 pointer-events-none opacity-5"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 4px)",
+        }}
       />
 
-      <div className="relative max-w-3xl mx-auto px-6 md:px-8 z-10 text-center">
+      {/* Retro Geometric Shapes - Hidden on mobile */}
+      <div className="hidden md:block absolute top-20 left-10 w-32 lg:w-40 h-32 lg:h-40 border-4 border-white opacity-10 rotate-45 animate-pulse-slow" />
+      <div
+        className="hidden md:block absolute bottom-32 right-16 w-24 lg:w-32 h-24 lg:h-32 border-4 border-white opacity-10 rounded-full animate-pulse-slow"
+        style={{ animationDelay: "2s" }}
+      />
+      <div className="hidden lg:block absolute top-1/2 right-20 w-24 h-24 border-4 border-white opacity-10" />
+
+      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 md:px-8 z-10 text-center">
         {/* Badge */}
         <Motion.div
           ref={badgeRef}
           variants={fadeDown}
           initial="hidden"
           animate={badgeControls}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50 mb-6"
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-white bg-black mb-4 sm:mb-5 md:mb-6"
         >
-          <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-          <span className="text-xs md:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
-            LET’S CONNECT
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white animate-pulse" />
+          <span className="text-[10px] sm:text-xs md:text-sm font-bold text-white tracking-widest uppercase">
+            LET'S CONNECT
           </span>
         </Motion.div>
 
@@ -141,12 +165,11 @@ export default function Contact() {
           variants={fadeDown}
           initial="hidden"
           animate={titleControls}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4 uppercase"
         >
-          Get in{" "}
-          <span className="bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent">
-            Touch
-          </span>
+          <span className="block">Get in</span>
+          <span className="block">Touch</span>
+          <div className="mt-2 sm:mt-3 mx-auto w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-white" />
         </Motion.h2>
 
         {/* Description */}
@@ -155,10 +178,10 @@ export default function Contact() {
           variants={fadeUp}
           initial="hidden"
           animate={descControls}
-          className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-10 text-sm md:text-base leading-relaxed"
+          className="text-gray-300 max-w-xl mx-auto mb-6 sm:mb-8 md:mb-10 text-xs sm:text-sm md:text-base leading-relaxed px-2"
         >
           Have a project in mind, a collaboration offer, or just want to chat?
-          Feel free to reach out, I’d love to hear from you!
+          Feel free to reach out, I'd love to hear from you!
         </Motion.p>
 
         {/* Buttons */}
@@ -167,15 +190,17 @@ export default function Contact() {
           variants={fadeUp}
           initial="hidden"
           animate={buttonsControls}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6"
         >
-          <a
+          <Motion.a
             href="mailto:revimeidina72@gmail.com"
-            className="group flex items-center gap-2 px-6 py-3 md:px-7 md:py-3.5 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 text-white font-semibold text-sm md:text-base shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-300 hover:-translate-y-0.5"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
+            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 md:px-7 md:py-3.5 bg-white text-black font-bold text-xs sm:text-sm md:text-base border-2 border-white hover:bg-black hover:text-white transition-all duration-300 uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] sm:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] sm:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]"
           >
             Email Me
             <svg
-              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -187,17 +212,19 @@ export default function Contact() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </a>
+          </Motion.a>
 
-          <a
+          <Motion.a
             href="https://wa.me/6281818294515"
             target="_blank"
             rel="noreferrer"
-            className="group flex items-center gap-2 px-6 py-3 md:px-7 md:py-3.5 rounded-full bg-transparent border-2 border-gray-300 dark:border-gray-700 hover:border-pink-600 dark:hover:border-pink-500 text-gray-900 dark:text-white font-semibold text-sm md:text-base transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900/10 hover:-translate-y-0.5"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.95 }}
+            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 md:px-7 md:py-3.5 border-2 border-white bg-black text-white font-bold text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-wider shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] sm:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] sm:hover:shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]"
           >
             WhatsApp
             <svg
-              className="w-4 h-4 group-hover:rotate-45 transition-transform"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:rotate-45 transition-transform"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -209,7 +236,7 @@ export default function Contact() {
                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
               />
             </svg>
-          </a>
+          </Motion.a>
         </Motion.div>
       </div>
     </section>

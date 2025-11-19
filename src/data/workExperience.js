@@ -17,7 +17,7 @@ const workExperience = [
   },
   {
     role: "Content Writer & Editor (Freelance Remote)",
-    company: "BedaSisi.com",
+    company: "BedaSisi",
     period: "June – October 2023",
     type: "Remote",
     icon: "B",

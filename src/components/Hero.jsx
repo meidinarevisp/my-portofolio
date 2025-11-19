@@ -73,29 +73,50 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white dark:from-[#0a0a0a] dark:via-[#0f0f0f] dark:to-[#0a0a0a] transition-colors duration-300"
+      className="relative min-h-screen flex items-center justify-center text-center overflow-hidden bg-black transition-colors duration-300 px-4 py-20 sm:py-24 md:py-0"
     >
-      {/* Background texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[url('https://www.transparenttextures.com/patterns/noise.png')]" />
+      {/* Retro Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #fff 1px, transparent 1px),
+              linear-gradient(to bottom, #fff 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
 
-      {/* Soft orbs */}
-      <div className="absolute top-1/4 left-10 w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-pink-400/20 to-rose-500/20 dark:from-pink-600/10 dark:to-rose-700/10 rounded-full blur-3xl animate-pulse-slow" />
+      {/* Scanline Effect */}
       <div
-        className="absolute bottom-1/4 right-10 w-64 h-64 md:w-80 md:h-80 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 dark:from-purple-600/10 dark:to-pink-700/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDelay: "2s" }}
+        className="absolute inset-0 pointer-events-none opacity-5"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 4px)",
+        }}
       />
 
-      <div className="relative max-w-md sm:max-w-2xl mx-auto px-5 sm:px-8 z-10">
+      {/* Retro Shapes - Hidden on mobile */}
+      <div className="hidden md:block absolute top-20 left-10 w-24 lg:w-32 h-24 lg:h-32 border-4 border-white opacity-10 rotate-45 animate-pulse-slow" />
+      <div
+        className="hidden md:block absolute bottom-32 right-16 w-32 lg:w-40 h-32 lg:h-40 border-4 border-white opacity-10 rounded-full animate-pulse-slow"
+        style={{ animationDelay: "2s" }}
+      />
+      <div className="hidden lg:block absolute top-1/2 right-20 w-24 h-24 border-4 border-white opacity-10" />
+
+      <div className="relative w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto z-10">
         {/* Greeting Badge */}
         <Motion.div
           ref={badgeRef}
           variants={fadeDown}
           initial="hidden"
           animate={badgeControls}
-          className="inline-flex items-center gap-2 px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-pink-100 to-rose-100 dark:from-pink-900/30 dark:to-rose-900/30 border border-pink-200 dark:border-pink-800/50 mb-5 sm:mb-6"
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-white bg-black mb-4 sm:mb-5 md:mb-6"
         >
-          <div className="w-2 h-2 rounded-full bg-pink-600 dark:bg-pink-400 animate-pulse" />
-          <span className="text-xs sm:text-sm font-semibold text-pink-900 dark:text-pink-300 tracking-wide">
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white animate-pulse" />
+          <span className="text-[10px] sm:text-xs md:text-sm font-bold text-white tracking-widest">
             WELCOME TO MY PORTFOLIO
           </span>
         </Motion.div>
@@ -106,14 +127,15 @@ export default function Hero() {
           variants={fadeDown}
           initial="hidden"
           animate={headingControls}
-          className="mb-4 sm:mb-6"
+          className="mb-3 sm:mb-4 md:mb-6"
         >
-          <span className="block text-gray-700 dark:text-gray-400 font-normal text-xl sm:text-3xl mb-2">
+          <span className="block text-white font-normal text-base sm:text-xl md:text-2xl lg:text-3xl mb-2 tracking-wide">
             Hello, I'm
           </span>
-          <span className="block text-3xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 dark:from-pink-400 dark:via-rose-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight">
+          <span className="block text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight uppercase">
             Meidina Revi
           </span>
+          <div className="mt-2 sm:mt-3 mx-auto w-20 sm:w-24 md:w-32 h-0.5 sm:h-1 bg-white" />
         </Motion.h1>
 
         {/* Subtitle */}
@@ -122,10 +144,10 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate={subtitleControls}
-          className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mx-auto mb-6 sm:mb-8 px-1"
+          className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-300 leading-relaxed max-w-full sm:max-w-md md:max-w-xl mx-auto mb-5 sm:mb-6 md:mb-8 px-2 sm:px-4"
         >
           A{" "}
-          <span className="font-semibold text-pink-700 dark:text-pink-400">
+          <span className="font-bold text-white border-b-2 border-white">
             Front-End Web Developer
           </span>{" "}
           who loves creating beautiful, responsive websites
@@ -137,17 +159,17 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate={btnControls}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10"
+          className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 md:gap-4 mb-8 sm:mb-10"
         >
           <Motion.a
             href="#projects"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
-            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-semibold text-sm sm:text-base shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/40 transition-all duration-300"
+            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-white text-black font-bold text-xs sm:text-sm md:text-base hover:bg-black hover:text-white border-2 border-white transition-all duration-300 uppercase tracking-wider"
           >
             <span>View My Work</span>
             <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -165,10 +187,10 @@ export default function Hero() {
             href="mailto:revimeidina72@gmail.com"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.95 }}
-            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-gray-300 dark:border-gray-700 hover:border-pink-600 dark:hover:border-pink-500 text-gray-900 dark:text-white font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-pink-50 dark:hover:bg-pink-900/10"
+            className="group w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 border-2 border-white text-white font-bold text-xs sm:text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-wider"
           >
             <span>Get In Touch</span>
-            <HiOutlineMail className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
+            <HiOutlineMail className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-0.5 transition-transform" />
           </Motion.a>
         </Motion.div>
 
@@ -178,16 +200,16 @@ export default function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate={socialControls}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6"
         >
           <div className="flex items-center gap-2">
-            <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-transparent to-pink-300 dark:to-pink-700" />
-            <span className="text-xs text-gray-500 dark:text-gray-500 font-medium">
+            <div className="w-6 sm:w-8 md:w-12 h-[2px] bg-white" />
+            <span className="text-[10px] sm:text-xs text-white font-bold tracking-widest">
               CONNECT
             </span>
           </div>
 
-          <div className="flex gap-3 sm:gap-4">
+          <div className="flex gap-2.5 sm:gap-3 md:gap-4">
             {[
               { href: "https://github.com/meidinarevisp", icon: <FaGithub /> },
               {
@@ -206,7 +228,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, y: -3 }}
                 whileTap={{ scale: 0.9 }}
-                className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-pink-500 dark:hover:border-pink-500 shadow-md transition-all duration-300 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400"
+                className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 flex items-center justify-center border-2 border-white bg-black hover:bg-white text-white hover:text-black transition-all duration-300 text-base sm:text-lg"
               >
                 {item.icon}
               </Motion.a>
@@ -214,10 +236,10 @@ export default function Hero() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 dark:text-gray-500 font-medium">
+            <span className="text-[10px] sm:text-xs text-white font-bold tracking-widest">
               WITH ME
             </span>
-            <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-l from-transparent to-pink-300 dark:to-pink-700" />
+            <div className="w-6 sm:w-8 md:w-12 h-[2px] bg-white" />
           </div>
         </Motion.div>
       </div>
@@ -227,20 +249,20 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 sm:gap-3 z-20"
       >
         <Motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-6 h-10 rounded-full border-2 border-pink-400/60 dark:border-pink-500/60 flex items-start justify-center p-2 bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm"
+          className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white flex items-start justify-center p-1.5 sm:p-2 bg-black"
         >
           <Motion.div
-            animate={{ y: [0, 14, 0], opacity: [0.5, 1, 0.5] }}
+            animate={{ y: [0, 12, 0], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="w-1.5 h-1.5 rounded-full bg-gradient-to-b from-pink-500 to-rose-500"
+            className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white"
           />
         </Motion.div>
-        <span className="text-xs text-gray-400 dark:text-gray-500 font-medium tracking-widest">
+        <span className="text-[10px] sm:text-xs text-white font-bold tracking-widest">
           SCROLL
         </span>
       </Motion.div>
