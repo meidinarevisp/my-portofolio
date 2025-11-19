@@ -25,12 +25,21 @@ export default function MyProjects() {
     },
   };
 
-  const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const scaleIn = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: "easeOut", delay: 0.2 },
     },
   };
 
@@ -156,7 +165,7 @@ export default function MyProjects() {
   return (
     <section
       id="projects-page"
-      className="relative pt-24 sm:pt-32 md:pt-36 lg:pt-40 pb-12 sm:pb-20 md:pb-24 lg:pb-32 overflow-hidden bg-white transition-colors duration-700"
+      className="relative min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-white overflow-hidden transition-colors duration-700"
     >
       {/* Retro Grid Background */}
       <div className="absolute inset-0 opacity-[0.03]">
@@ -207,23 +216,20 @@ export default function MyProjects() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="hidden md:block absolute top-1/2 left-1/4 w-28 h-28 border-4 border-black opacity-5 rounded-full"
+        className="hidden md:block absolute top-1/3 right-1/4 w-28 h-28 border-4 border-black opacity-5 rounded-full"
       />
 
       {/* CONTENT */}
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
+      <div className="relative z-10 max-w-7xl w-full">
         {/* HEADER */}
-        <Motion.div
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="text-center mb-10 sm:mb-16 md:mb-20 space-y-4 sm:space-y-6"
-        >
+        <div className="text-center mb-10 sm:mb-16 md:mb-20 space-y-4 sm:space-y-6">
           {/* Badge */}
           <Motion.div
+            variants={scaleIn}
+            initial="hidden"
+            animate="visible"
             whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            className="inline-flex items-center mt-8 sm:mt-12 gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
           >
             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black animate-pulse" />
             <span className="text-[10px] sm:text-xs md:text-sm font-bold text-black tracking-widest uppercase">
@@ -232,7 +238,12 @@ export default function MyProjects() {
           </Motion.div>
 
           {/* Title */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase px-4 sm:px-0">
+          <Motion.h2
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase px-4 sm:px-0"
+          >
             All My{" "}
             <Motion.span className="relative inline-block">
               Projects
@@ -249,20 +260,20 @@ export default function MyProjects() {
                 className="absolute -bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-black"
               />
             </Motion.span>
-          </h2>
+          </Motion.h2>
 
           {/* Description */}
           <Motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
             className="text-xs sm:text-sm md:text-base text-black/70 max-w-2xl mx-auto leading-relaxed font-bold px-4 sm:px-6 md:px-0"
           >
             A curated collection of projects I've built with passion and
             precision. From concept to deployment, each one tells a unique story
             of innovation and problem-solving.
           </Motion.p>
-        </Motion.div>
+        </div>
 
         {/* PROJECT GRID */}
         <Motion.div

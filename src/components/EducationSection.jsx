@@ -152,7 +152,7 @@ export default function EducationSection() {
         className="hidden md:block absolute bottom-16 lg:bottom-20 left-16 lg:left-20 w-24 lg:w-32 h-24 lg:h-32 border-4 border-black opacity-5 rounded-full"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <Motion.div
@@ -205,7 +205,7 @@ export default function EducationSection() {
               whileHover={{ y: -4 }}
               className="group relative"
             >
-              <div className="relative bg-white p-6 sm:p-8 border-2 sm:border-3 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] sm:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden">
+              <div className="relative bg-white p-5 sm:p-6 md:p-8 border-2 sm:border-3 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] sm:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] md:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden">
                 {/* Scan line effect */}
                 <Motion.div
                   animate={{
@@ -221,39 +221,67 @@ export default function EducationSection() {
                 />
 
                 {/* Content Layout */}
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-5 sm:gap-6">
                   {/* Logo */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center border-2 border-black bg-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 flex items-center justify-center border-2 border-black bg-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                       <img
                         src={edu.logo}
                         alt={edu.school}
                         className="w-full h-full object-contain p-2"
                       />
                     </div>
+                    {/* Decorative corner */}
+                    <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-black bg-white" />
                   </div>
 
                   {/* Info */}
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-xl sm:text-2xl font-black text-black mb-2 uppercase tracking-tight group-hover:tracking-wide transition-all duration-300">
+                  <div className="flex-1 text-center md:text-left w-full">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-black text-black mb-3 uppercase tracking-tight group-hover:tracking-wide transition-all duration-300">
                       {edu.school}
                     </h3>
 
-                    <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-4">
                       <span className="text-xs sm:text-sm font-bold text-black uppercase tracking-wide">
                         {edu.degree}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-4 text-sm">
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-4 mb-4 text-sm">
                       <div className="flex items-center gap-2">
-                        <div className="w-1 h-1 bg-black" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                          />
+                        </svg>
                         <span className="text-xs sm:text-sm text-black/70 font-bold uppercase tracking-wider">
                           {edu.period}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="w-1 h-1 bg-black" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                          />
+                        </svg>
                         <span className="text-xs sm:text-sm font-black text-black uppercase tracking-wider">
                           {edu.gpa}
                         </span>
@@ -261,21 +289,38 @@ export default function EducationSection() {
                     </div>
 
                     {/* Thesis */}
-                    <div className="relative p-4 bg-white border-2 border-black">
-                      <div className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-black mt-1.5 flex-shrink-0" />
-                        <div>
-                          <h4 className="text-xs sm:text-sm font-black text-black mb-2 uppercase tracking-wider">
-                            Thesis
-                          </h4>
+                    <div className="relative p-4 sm:p-5 bg-white border-2 border-black">
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <div className="w-1.5 h-1.5 bg-black mt-1.5 flex-shrink-0 group-hover:animate-pulse" />
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black flex-shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2.5}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                              />
+                            </svg>
+                            <h4 className="text-xs sm:text-sm font-black text-black uppercase tracking-wider">
+                              Thesis
+                            </h4>
+                          </div>
                           <p className="text-xs sm:text-sm text-black/80 leading-relaxed">
                             {edu.thesis}
                           </p>
                         </div>
                       </div>
 
-                      {/* Corner accent */}
+                      {/* Corner accents */}
                       <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-black" />
+                      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-black" />
                     </div>
                   </div>
                 </div>

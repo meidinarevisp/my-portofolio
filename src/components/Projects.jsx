@@ -1,46 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion as Motion, AnimatePresence, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-
-// Sample projects data
-const projects = [
-  {
-    id: 1,
-    title: "E-Commerce Platform",
-    description:
-      "A modern e-commerce platform built with React and Node.js, featuring real-time inventory management, secure payment integration, and responsive design for seamless shopping experience across all devices.",
-    category: "Web Development",
-    tags: ["React", "Node.js", "MongoDB"],
-    image:
-      "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
-    caseStudyUrl: "#",
-    liveUrl: "#",
-  },
-  {
-    id: 2,
-    title: "Portfolio Website",
-    description:
-      "A stunning portfolio website with modern animations and interactions. Features include dark mode, smooth scrolling, and dynamic content loading for an engaging user experience.",
-    category: "UI/UX Design",
-    tags: ["React", "Framer Motion", "Tailwind"],
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-    caseStudyUrl: "#",
-    liveUrl: "#",
-  },
-  {
-    id: 3,
-    title: "Task Management App",
-    description:
-      "An intuitive task management application with drag-and-drop functionality, team collaboration features, and real-time updates to boost productivity and streamline workflows.",
-    category: "App Development",
-    tags: ["Vue.js", "Firebase", "TypeScript"],
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop",
-    caseStudyUrl: "#",
-    liveUrl: "#",
-  },
-];
+import { Link } from "react-router-dom";
+import projects from "../data/projects";
 
 export default function Projects() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
@@ -145,10 +107,6 @@ export default function Projects() {
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
     setIsAutoPlaying(false);
-  };
-
-  const handleViewAllClick = () => {
-    window.scrollTo(0, 0);
   };
 
   const currentProject = projects[currentIndex];
@@ -354,7 +312,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="group flex items-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm md:text-base bg-black text-white font-bold uppercase tracking-wider border-2 border-black hover:bg-white hover:text-black transition-all duration-300 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <span>Case Study</span>
+                      <span>Study Case</span>
                       <svg
                         className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform"
                         fill="none"
@@ -464,11 +422,9 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* View All Projects Button */}
-          <Motion.button
-            onClick={handleViewAllClick}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          {/* View All Projects Button - Changed to Link */}
+          <Link
+            to="/projects"
             className="group flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base font-bold text-black transition-all order-3 uppercase tracking-wider border-b-2 border-transparent hover:border-black"
           >
             <span>View All</span>
@@ -485,7 +441,7 @@ export default function Projects() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </Motion.button>
+          </Link>
         </Motion.div>
       </div>
     </section>

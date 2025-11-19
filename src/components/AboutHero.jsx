@@ -4,9 +4,10 @@ import { useInView } from "react-intersection-observer";
 import profile from "../assets/images/profile.png";
 
 export default function AboutHero() {
-  const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false });
   const lastScrollY = useRef(0);
   const scrollDirection = useRef("down");
+  const hasAnimatedOnce = useRef(false);
 
   // Controls
   const badgeControls = useAnimation();
@@ -19,6 +20,18 @@ export default function AboutHero() {
   const imageRef = useRef(null);
   const contentRef = useRef(null);
 
+  // Initial animation on mount - LANGSUNG MUNCUL
+  useEffect(() => {
+    if (!hasAnimatedOnce.current) {
+      hasAnimatedOnce.current = true;
+      // Trigger animasi langsung saat komponen pertama kali dimuat
+      badgeControls.start("visible");
+      setTimeout(() => titleControls.start("visible"), 150);
+      setTimeout(() => imageControls.start("visible"), 300);
+      setTimeout(() => contentControls.start("visible"), 450);
+    }
+  }, [badgeControls, titleControls, imageControls, contentControls]);
+
   // Scroll direction tracking
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +43,13 @@ export default function AboutHero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Sequential entrance on scroll down
+  // Sequential entrance on scroll down (untuk re-enter setelah exit)
   useEffect(() => {
-    if (inView && scrollDirection.current === "down") {
+    if (
+      inView &&
+      scrollDirection.current === "down" &&
+      hasAnimatedOnce.current
+    ) {
       badgeControls.start("visible");
       setTimeout(() => titleControls.start("visible"), 150);
       setTimeout(() => imageControls.start("visible"), 300);
@@ -85,7 +102,7 @@ export default function AboutHero() {
   const dur = isMobile ? 0.45 : 0.65;
   const dist = isMobile ? 20 : 30;
 
-  // Animation variants
+  // Animation variants - UBAH INITIAL STATE
   const fadeDown = {
     hidden: { opacity: 0, y: -dist },
     visible: {
@@ -177,7 +194,7 @@ export default function AboutHero() {
         <Motion.div
           ref={badgeRef}
           variants={fadeDown}
-          initial="hidden"
+          initial="visible"
           animate={badgeControls}
           className="flex justify-center mb-4 sm:mb-5 md:mb-6"
         >
@@ -200,7 +217,7 @@ export default function AboutHero() {
         <Motion.h2
           ref={titleRef}
           variants={fadeDown}
-          initial="hidden"
+          initial="visible"
           animate={titleControls}
           className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-black tracking-tight uppercase mb-8 sm:mb-10 md:mb-12"
         >
@@ -224,7 +241,7 @@ export default function AboutHero() {
           <Motion.div
             ref={imageRef}
             variants={isMobile ? fadeUp : fadeLeft}
-            initial="hidden"
+            initial="visible"
             animate={imageControls}
             className="relative flex-shrink-0 group"
           >
@@ -291,7 +308,7 @@ export default function AboutHero() {
           <Motion.div
             ref={contentRef}
             variants={isMobile ? fadeUp : fadeRight}
-            initial="hidden"
+            initial="visible"
             animate={contentControls}
             className="flex-1 text-center md:text-left space-y-4 sm:space-y-5"
           >
@@ -369,7 +386,7 @@ export default function AboutHero() {
                   key={skill.name}
                   whileHover={{ scale: 1.1, y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  initial={{ opacity: 1, scale: 1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
                   className="group relative px-2.5 py-1.5 sm:px-3 sm:py-2 bg-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer overflow-hidden transition-all duration-300"

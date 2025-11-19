@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { motion as Motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 export default function About() {
   const { ref, inView } = useInView({ threshold: 0.3, triggerOnce: false });
@@ -180,13 +181,6 @@ export default function About() {
     },
   };
 
-  const handleAboutMeClick = () => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       id="about"
@@ -356,27 +350,31 @@ export default function About() {
                 </svg>
               </Motion.a>
 
-              <Motion.button
+              <Motion.div
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ scale: 1.02 }}
-                onClick={handleAboutMeClick}
-                className="group flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 border-2 border-black text-black font-bold text-xs sm:text-sm md:text-base hover:bg-black hover:text-white transition-all duration-300 uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                className="group"
               >
-                <span>About Me</span>
-                <svg
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <Link
+                  to="/about"
+                  className="flex items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 border-2 border-black text-black font-bold text-xs sm:text-sm md:text-base hover:bg-black hover:text-white transition-all duration-300 uppercase tracking-wider shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </Motion.button>
+                  <span>About Me</span>
+                  <svg
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </Link>
+              </Motion.div>
             </Motion.div>
           </div>
         </div>
